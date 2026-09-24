@@ -28,9 +28,9 @@ def _get(url: str, params: dict, timeout: int = 60, max_retries: int = 6) -> req
     raise RuntimeError("unreachable")
 
 
-def esearch(term: str, db: str = "nucleotide", retmax: int = 20) -> dict:
+def esearch(term: str, db: str = "nucleotide", retmax: int = 20, retstart: int = 0) -> dict:
     """Search an NCBI database, returning count and id list."""
-    params = {"db": db, "term": term, "retmax": retmax, "retmode": "json"}
+    params = {"db": db, "term": term, "retmax": retmax, "retstart": retstart, "retmode": "json"}
     time.sleep(0.4)
     res = _get(f"{EUTILS}/esearch.fcgi", params).json()["esearchresult"]
     return {"count": int(res["count"]), "ids": res["idlist"]}

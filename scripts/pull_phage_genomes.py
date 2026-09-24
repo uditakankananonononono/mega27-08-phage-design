@@ -35,10 +35,10 @@ def _single_record_text(text: str, accession: str) -> str:
 
 
 
-def main(retmax: int = 120) -> None:
+def main(retmax: int = 120, retstart: int = 0) -> None:
     rows = []
     for label, term in QUERIES.items():
-        res = esearch(term, retmax=retmax)
+        res = esearch(term, retmax=retmax, retstart=retstart)
         ids = res["ids"]
         print(f"[{label}] {res['count']} hits; fetching {len(ids)}")
         for i in range(0, len(ids), 10):
@@ -60,7 +60,7 @@ def main(retmax: int = 120) -> None:
                         "rbp_product": product, "rbp_aa_len": len(aa),
                     })
             print(f"  batch {i//10 + 1}: cumulative rows={len(rows)}")
-    out = Path("data/processed/rbp_host_pairs.csv")
+    out = Path(f"data/processed/rbp_host_pairs_{retstart}.csv")
     with out.open("w", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=list(rows[0].keys()) if rows else
                            ["query", "accession", "organism", "host", "genome_length",
@@ -71,4 +71,5 @@ def main(retmax: int = 120) -> None:
 
 
 if __name__ == "__main__":
-    main(retmax=int(sys.argv[1]) if len(sys.argv) > 1 else 120)
+    main(retmax=int(sys.argv[1]) if len(sys.argv) > 1 else 120,
+         retstart=int(sys.argv[2]) if len(sys.argv) > 2 else 0)
