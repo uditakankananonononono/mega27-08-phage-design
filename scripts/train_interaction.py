@@ -19,6 +19,7 @@ import pandas as pd
 import torch
 import torch.nn as nn
 from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import average_precision_score, roc_auc_score
 from sklearn.model_selection import GroupShuffleSplit
 
@@ -51,6 +52,7 @@ def load_task():
         return protein_index[seq]
 
     samples, groups = [], []
+    host_names, rbp_lists = [], []
     for _, row in phages.iterrows():
         rbps = [s.strip() for s in row.rbp_sequences.split(" ||| ")][:MAX_RBP]
         if not rbps:
@@ -63,28 +65,45 @@ def load_task():
         samples.append((p_idx, h_pos, 1))
         samples.append((p_idx, h_neg, 0))
         groups += [row.accession, row.accession]
-    return phages, proteins, samples, groups, species_receptors
+        host_names += [pos_sp, neg_sp]
+        rbp_lists += [rbps, rbps]
+    return phages, proteins, samples, groups, species_receptors, host_names, rbp_lists
 
 
-def kmer_lr_baseline(phages, samples, groups, species_receptors, splits):
-    """Logistic regression on mean dipeptide spectrum (phage RBPs + host panel)."""
-    panel_spec = {sp: np.mean([kmer_spectrum(s, k=2) for s in seqs], axis=0)
+def kmer_lr_baseline(samples, groups, host_names, rbp_lists, species_receptors,
+                     tr_idx, va_idx, te_idx):
+    """PHP-class baseline: logistic regression on mean dipeptide spectra of the
+    phage RBP set concatenated with the host panel's mean spectrum."""
+    panel_spec = {sp: np.mean([kmer_spectrum(x, k=2) for x in seqs], axis=0)
                   for sp, seqs in species_receptors.items()}
-    X, y = [], []
-    phage_map = phages.set_index("accession")
-    # rebuild features per sample from group id (accession) and host side
-    for (p_idx, h_idx, label), acc in zip(samples, groups):
-        # h side identity: match panel spectrum by index unknown -> recover by
-        # receptor count heuristic is fragile; instead rebuild from label:
-        pass  # replaced below
-    return None
+    phage_spec = np.stack([np.mean([kmer_spectrum(x, k=2) for x in rbps], axis=0)
+                           for rbps in rbp_lists])
+    host_spec = np.stack([panel_spec[sp] for sp in host_names])
+    # Hadamard interaction features: a constant host-side offset cannot break
+    # the pair symmetry (see paper/derivations.md); only phage x host
+    # interaction terms can.
+    X = np.concatenate([phage_spec * host_spec, phage_spec - host_spec], axis=1)
+    y = np.array([s[2] for s in samples])
+    # k-mer spectra are O(1e-3); without scaling, lbfgs can stop at the
+    # zero-gradient start (observed: n_iter=0, degenerate 0.5 AUROC).
+    scaler = StandardScaler().fit(X[tr_idx])
+    Xs = scaler.transform(X)
+    clf = LogisticRegression(max_iter=5000, C=1.0)
+    clf.fit(Xs[tr_idx], y[tr_idx])
+    out = {}
+    for name, idx in [("val", va_idx), ("test", te_idx)]:
+        score = clf.decision_function(Xs[idx])
+        out[f"{name}_auroc"] = float(roc_auc_score(y[idx], score))
+        out[f"{name}_auprc"] = float(average_precision_score(y[idx], score))
+        out[f"{name}_acc"] = float(((score > 0) == y[idx]).mean())
+    return out
 
 
 def main():
     torch.manual_seed(SEED)
     np.random.seed(SEED)
     t0 = time.time()
-    phages, proteins, samples, groups = load_task()
+    phages, proteins, samples, groups, species_receptors, host_names, rbp_lists = load_task()
     print(f"phages={len(phages)} samples={len(samples)} unique proteins={len(proteins)}")
 
     gss = GroupShuffleSplit(n_splits=1, test_size=0.2, random_state=SEED)
@@ -93,6 +112,7 @@ def main():
     gss2 = GroupShuffleSplit(n_splits=1, test_size=0.125, random_state=SEED + 1)
     tr_sub, va = next(gss2.split(tr, groups=[groups[i] for i in tr]))
     tr_idx, va_idx, te_idx = tr[tr_sub], tr[va], te
+    te_idx_set = set(te_idx.tolist())
     print(f"split sizes train={len(tr_idx)} val={len(va_idx)} test={len(te_idx)}")
 
     bank = ProteinBank(proteins, max_len=MAX_LEN)
@@ -139,6 +159,29 @@ def main():
               f"AUPRC={va_auprc:.3f} acc={va_acc:.3f}")
 
     te_auroc, te_auprc, te_acc = evaluate(te_idx)
+
+    # per-phage choice accuracy: does the true host panel outscore the other?
+    model.eval()
+    phage_samples = {}
+    for j, ((p_idx, h_idx, label), acc) in enumerate(zip(samples, groups)):
+        phage_samples.setdefault(acc, {})[label] = j
+    choice_correct, choice_total = 0, 0
+    with torch.no_grad():
+        for acc, d in phage_samples.items():
+            if 1 not in d or 0 not in d:
+                continue
+            if d[1] not in te_idx_set or d[0] not in te_idx_set:
+                continue
+            s_pos = model(*collate_pairs([samples[d[1]]], bank)[:4]).item()
+            s_neg = model(*collate_pairs([samples[d[0]]], bank)[:4]).item()
+            choice_correct += int(s_pos > s_neg)
+            choice_total += 1
+    choice_acc = choice_correct / max(choice_total, 1)
+    print(f"CHOICE ACCURACY (test phages): {choice_acc:.3f} ({choice_correct}/{choice_total})")
+    baseline = kmer_lr_baseline(samples, groups, host_names, rbp_lists,
+                                species_receptors, tr_idx, va_idx, te_idx)
+    print(f"BASELINE KMER-LR  test AUROC={baseline['test_auroc']:.3f} "
+          f"AUPRC={baseline['test_auprc']:.3f} acc={baseline['test_acc']:.3f}")
     result = {
         "model": "CNN-BILIN",
         "test_auroc": te_auroc, "test_auprc": te_auprc, "test_acc": te_acc,
@@ -146,6 +189,9 @@ def main():
         "n_unique_proteins": int(len(proteins)),
         "epochs": EPOCHS, "max_len": MAX_LEN, "emb": EMB,
         "runtime_s": round(time.time() - t0, 1),
+        "baseline_kmer_lr": baseline,
+        "test_choice_accuracy": choice_acc,
+        "test_choice_n": choice_total,
         "history": history,
     }
     Path("results").mkdir(exist_ok=True)
