@@ -20,8 +20,8 @@ from .cnn import ProteinCNNEncoder
 class InteractionModel(nn.Module):
     def __init__(self, emb_dim: int = 128):
         super().__init__()
-        self.phage_cnn = ProteinCNNEncoder(in_channels=3, hidden=64, emb_dim=emb_dim)
-        self.host_cnn = ProteinCNNEncoder(in_channels=3, hidden=64, emb_dim=emb_dim)
+        self.phage_cnn = ProteinCNNEncoder(in_channels=23, hidden=64, emb_dim=emb_dim)
+        self.host_cnn = ProteinCNNEncoder(in_channels=23, hidden=64, emb_dim=emb_dim)
         self.bilinear = nn.Bilinear(emb_dim, emb_dim, 1)
 
     def score(self, phage_x: torch.Tensor, host_x: torch.Tensor) -> torch.Tensor:

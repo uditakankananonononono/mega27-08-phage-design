@@ -13,7 +13,7 @@ import numpy as np
 import torch
 from torch.utils.data import Dataset
 
-from .features.sequence import physicochemical_profile
+from .features.sequence import full_profile
 
 
 class ProteinBank:
@@ -24,8 +24,8 @@ class ProteinBank:
         self.seq_count = len(sequences)
         mats = []
         for s in sequences:
-            m = physicochemical_profile(s[:max_len])
-            pad = np.zeros((max_len, 3), dtype=np.float32)
+            m = full_profile(s[:max_len])
+            pad = np.zeros((max_len, 23), dtype=np.float32)
             pad[:len(m)] = m
             mats.append(pad)
         self.tensor = torch.from_numpy(np.stack(mats))  # (N, max_len, 3)

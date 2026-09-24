@@ -67,3 +67,17 @@ def physicochemical_profile(seq: str) -> np.ndarray:
         arr[i, 1] = VOLUME[ch] / 200.0
         arr[i, 2] = CHARGE[ch]
     return arr
+
+
+def one_hot_profile(seq: str) -> np.ndarray:
+    """(L, 20) float32 one-hot over canonical residues."""
+    seq = clean_sequence(seq)
+    arr = np.zeros((len(seq), 20), dtype=np.float32)
+    for i, ch in enumerate(seq):
+        arr[i, AA_INDEX[ch]] = 1.0
+    return arr
+
+
+def full_profile(seq: str) -> np.ndarray:
+    """(L, 23) float32: one-hot (20) + physicochemical (3)."""
+    return np.concatenate([one_hot_profile(seq), physicochemical_profile(seq)], axis=1)

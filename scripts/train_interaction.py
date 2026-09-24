@@ -33,7 +33,7 @@ SPECIES = ["Escherichia coli", "Klebsiella pneumoniae"]
 MAX_RBP = 4
 MAX_LEN = 600
 EMB = 64
-EPOCHS = 12
+EPOCHS = 30
 SEED = 7
 
 
@@ -117,7 +117,7 @@ def main():
 
     bank = ProteinBank(proteins, max_len=MAX_LEN)
     model = GroupedInteractionModel(
-        ProteinCNNEncoder(3, 48, EMB), ProteinCNNEncoder(3, 48, EMB), emb_dim=EMB)
+        ProteinCNNEncoder(23, 48, EMB), ProteinCNNEncoder(23, 48, EMB), emb_dim=EMB)
     opt = torch.optim.Adam(model.parameters(), lr=2e-3, weight_decay=1e-5)
     lossf = nn.BCEWithLogitsLoss()
 

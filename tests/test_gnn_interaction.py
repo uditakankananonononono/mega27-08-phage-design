@@ -29,6 +29,6 @@ def test_gnn_permutation_invariant_readout():
 
 def test_interaction_logits_shape():
     m = InteractionModel(emb_dim=32)
-    px = torch.randn(4, 25, 3)
-    hx = torch.randn(4, 60, 3)
+    px = torch.randn(4, 25, 23)
+    hx = torch.randn(4, 60, 23)
     assert m.score(px, hx).shape == (4,)

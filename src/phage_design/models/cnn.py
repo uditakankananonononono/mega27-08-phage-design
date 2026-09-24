@@ -23,7 +23,7 @@ class ProteinCNNEncoder(nn.Module):
             nn.ReLU(),
         )
         self.head = nn.Sequential(
-            nn.Linear(hidden, emb_dim),
+            nn.Linear(2 * hidden, emb_dim),
             nn.ReLU(),
         )
 
@@ -32,7 +32,8 @@ class ProteinCNNEncoder(nn.Module):
         mask = (x.abs().sum(dim=-1, keepdim=True) > 0).float()  # (B, L, 1)
         h = self.convs(x.transpose(1, 2))                       # (B, hidden, L)
         h = h.transpose(1, 2) * mask                            # zero padded rows
-        h = h.masked_fill(mask == 0, -1e9)
-        pooled = h.max(dim=1).values                            # (B, hidden)
-        pooled = torch.where(torch.isfinite(pooled), pooled, torch.zeros_like(pooled))
-        return self.head(pooled)
+        lengths = mask.sum(dim=1).clamp(min=1.0)                # (B, 1)
+        mean_pooled = h.sum(dim=1) / lengths                    # composition
+        h_max = h.masked_fill(mask == 0, -1e9).max(dim=1).values
+        max_pooled = torch.where(torch.isfinite(h_max), h_max, torch.zeros_like(h_max))
+        return self.head(torch.cat([mean_pooled, max_pooled], dim=-1))
