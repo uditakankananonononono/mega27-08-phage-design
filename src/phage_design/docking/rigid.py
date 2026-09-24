@@ -49,13 +49,15 @@ def score_pose(rec_xyz: np.ndarray, lig_xyz: np.ndarray,
                rec_q: np.ndarray, lig_q: np.ndarray) -> float:
     """Higher is better: contacts - clashes + electrostatics."""
     d = np.linalg.norm(rec_xyz[:, None, :] - lig_xyz[None, :, :], axis=-1)
-    contacts = ((d >= 4.5) & (d <= 12.0)).sum()
+    # tight contact band: 4.5-9 A is the geometric signature of a real
+    # protein interface; 9-12 A "contacts" reward unspecific burial.
+    contacts = ((d >= 4.5) & (d <= 9.0)).sum()
     clashes = (d < 4.5).sum()
     # electrostatics over near pairs only (clipped distance)
     near = np.clip(d, 2.0, 20.0)
     elec = -(rec_q[:, None] * lig_q[None, :]) / near  # opposite charges attract
     elec = elec[d <= 20.0].sum()
-    return contacts - 10.0 * clashes + 0.1 * elec
+    return contacts - 50.0 * clashes + 0.1 * elec
 
 
 def dock(rec_res: list[tuple[str, tuple]], lig_res: list[tuple[str, tuple]],

@@ -6,10 +6,11 @@ from phage_design.docking.rigid import (dock, fibonacci_rotations,
 
 
 def _helix(n, offset=(0, 0, 0)):
+    # straight C-alpha line along x (3.8 A rise/residue) - no self-curvature,
+    # so inter-chain distances are exactly the offset plus axial differences.
     res = []
     for i in range(n):
-        res.append(("ALA", (i * 1.5 + offset[0], 5 * np.sin(i) + offset[1],
-                            5 * np.cos(i) + offset[2])))
+        res.append(("ALA", (i * 3.8 + offset[0], offset[1], offset[2])))
     return res
 
 
@@ -27,7 +28,7 @@ def test_residue_charges():
 
 def test_score_prefers_touching_nonclashing():
     rec = _helix(10)
-    lig_close = _helix(6, offset=(0, 8, 0))    # ~8 A away: contact zone
+    lig_close = _helix(6, offset=(0, 7, 0))    # 7 A away: contact zone, no clashes
     lig_far = _helix(6, offset=(0, 60, 0))     # far away
     rx = np.array([c for _, c in rec]); lx1 = np.array([c for _, c in lig_close])
     lx2 = np.array([c for _, c in lig_far])

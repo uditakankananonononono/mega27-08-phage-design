@@ -33,7 +33,7 @@ SPECIES = ["Escherichia coli", "Klebsiella pneumoniae"]
 MAX_RBP = 4
 MAX_LEN = 600
 EMB = 64
-EPOCHS = 30
+EPOCHS = 20
 SEED = 7
 
 
@@ -116,6 +116,16 @@ def main():
     print(f"split sizes train={len(tr_idx)} val={len(va_idx)} test={len(te_idx)}")
 
     bank = ProteinBank(proteins, max_len=MAX_LEN)
+    # precompute k-mer interaction features (Hadamard + difference), z-scored
+    # on the training split only (no test leakage)
+    panel_spec = {sp: np.mean([kmer_spectrum(x, k=2) for x in seqs], axis=0)
+                  for sp, seqs in species_receptors.items()}
+    phage_spec = np.stack([np.mean([kmer_spectrum(x, k=2) for x in rbps], axis=0)
+                           for rbps in rbp_lists])
+    host_spec = np.stack([panel_spec[sp] for sp in host_names])
+    kmer_feats = np.concatenate([phage_spec * host_spec, phage_spec - host_spec], axis=1)
+    mu, sd = kmer_feats[tr_idx].mean(0), kmer_feats[tr_idx].std(0) + 1e-8
+    kmer_feats = torch.from_numpy(((kmer_feats - mu) / sd).astype(np.float32))
     model = GroupedInteractionModel(
         ProteinCNNEncoder(23, 48, EMB), ProteinCNNEncoder(23, 48, EMB), emb_dim=EMB)
     opt = torch.optim.Adam(model.parameters(), lr=2e-3, weight_decay=1e-5)
@@ -124,16 +134,17 @@ def main():
     def batches(indices, bs=64, shuffle=True):
         order = np.random.permutation(indices) if shuffle else indices
         for i in range(0, len(order), bs):
-            chunk = [samples[j] for j in order[i:i + bs]]
-            yield collate_pairs(chunk, bank), torch.tensor(
-                [c[2] for c in chunk], dtype=torch.float32)
+            sel = order[i:i + bs]
+            chunk = [samples[j] for j in sel]
+            yield (collate_pairs(chunk, bank), kmer_feats[sel],
+                   torch.tensor([c[2] for c in chunk], dtype=torch.float32))
 
     def evaluate(indices):
         model.eval()
         logits, labels = [], []
         with torch.no_grad():
-            for (pb, hb, pg, hg, _), y in batches(indices, bs=128, shuffle=False):
-                logits.append(model(pb, hb, pg, hg))
+            for (pb, hb, pg, hg, _), kf, y in batches(indices, bs=128, shuffle=False):
+                logits.append(model(pb, hb, pg, hg, kf))
                 labels.append(y)
         logits = torch.cat(logits).numpy()
         labels = torch.cat(labels).numpy()
@@ -145,9 +156,9 @@ def main():
     for epoch in range(1, EPOCHS + 1):
         model.train()
         tot, n = 0.0, 0
-        for (pb, hb, pg, hg, _), y in batches(tr_idx):
+        for (pb, hb, pg, hg, _), kf, y in batches(tr_idx):
             opt.zero_grad()
-            loss = lossf(model(pb, hb, pg, hg), y)
+            loss = lossf(model(pb, hb, pg, hg, kf), y)
             loss.backward()
             opt.step()
             tot += loss.item() * len(y)
@@ -172,8 +183,8 @@ def main():
                 continue
             if d[1] not in te_idx_set or d[0] not in te_idx_set:
                 continue
-            s_pos = model(*collate_pairs([samples[d[1]]], bank)[:4]).item()
-            s_neg = model(*collate_pairs([samples[d[0]]], bank)[:4]).item()
+            s_pos = model(*collate_pairs([samples[d[1]]], bank)[:4], kmer_feats[d[1]].unsqueeze(0)).item()
+            s_neg = model(*collate_pairs([samples[d[0]]], bank)[:4], kmer_feats[d[0]].unsqueeze(0)).item()
             choice_correct += int(s_pos > s_neg)
             choice_total += 1
     choice_acc = choice_correct / max(choice_total, 1)
