@@ -11,7 +11,7 @@ TOOLS = [
  ("NCBI Protein efetch", "database/API", "independent accession verification (OmpC P06996 = OMPC_ECOLI)", "used", "external/tools/ncbi_protein_P06996.fasta"),
  ("ENA Browser/Portal API", "database/API", "candidate verification (PZ797503 = E. phage vB_EscC_ArakU1, 60,473 bp)", "used", "external/tools/ena_PZ797503_report.json"),
  ("UniProt REST", "database/API", "14 receptor sequences + annotations (live accession resolution)", "used", "data/processed/host_receptor_panel.csv; external/tools/uniprot_P06996.json"),
- ("AlphaFold Protein Structure DB", "database", "14 receptor structure models", "used", "data/structures/"),
+ ("AlphaFold Protein Structure DB", "database", "14 receptor structure models", "used", "data/raw/structures/"),
  ("AlphaFold API", "database/API", "model version resolution (v6), not pinned", "used", "scripts/fetch_receptor_structures.py"),
  ("RCSB PDB + Data API", "database/API", "docking control complex 8A8C metadata", "used", "external/tools/rcsb_8a8c.json"),
  ("PDBe API", "database/API", "8A8C summary cross-check", "used", "external/tools/pdbe_8a8c.json"),

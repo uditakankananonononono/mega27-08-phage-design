@@ -1,296 +1,296 @@
 [
- {
-  "tool": "NCBI Nucleotide E-utilities",
-  "category": "database/API",
-  "used_for": "phage genome pulls (title queries, backoff)",
-  "status": "used",
-  "artifact": "data/raw/genbank/"
- },
- {
-  "tool": "NCBI GenBank records",
-  "category": "database",
-  "used_for": "RBP CDS mining + host fields",
-  "status": "used",
-  "artifact": "data/processed/phage_rbp_table.csv"
- },
- {
-  "tool": "NCBI Taxonomy (esummary)",
-  "category": "database/API",
-  "used_for": "species identity verification (taxid 573)",
-  "status": "used",
-  "artifact": "external/tools/ncbi_tax_573.json"
- },
- {
-  "tool": "NCBI nuccore esearch (Virus scope)",
-  "category": "database/API",
-  "used_for": "corpus-size sanity counts",
-  "status": "used",
-  "artifact": "external/tools/ncbi_virus_kleb_count.json"
- },
- {
-  "tool": "NCBI Datasets v2 API",
-  "category": "database/API",
-  "used_for": "candidate genome metadata probe (no assembly-level record for PZ accessions; recorded)",
-  "status": "queried, no record",
-  "artifact": "external/tools/ncbi_datasets_PZ797503.json"
- },
- {
-  "tool": "NCBI Protein efetch",
-  "category": "database/API",
-  "used_for": "independent accession verification (OmpC P06996 = OMPC_ECOLI)",
-  "status": "used",
-  "artifact": "external/tools/ncbi_protein_P06996.fasta"
- },
- {
-  "tool": "ENA Browser/Portal API",
-  "category": "database/API",
-  "used_for": "candidate verification (PZ797503 = E. phage vB_EscC_ArakU1, 60,473 bp)",
-  "status": "used",
-  "artifact": "external/tools/ena_PZ797503_report.json"
- },
- {
-  "tool": "UniProt REST",
-  "category": "database/API",
-  "used_for": "14 receptor sequences + annotations (live accession resolution)",
-  "status": "used",
-  "artifact": "data/processed/host_receptor_panel.csv; external/tools/uniprot_P06996.json"
- },
- {
-  "tool": "AlphaFold Protein Structure DB",
-  "category": "database",
-  "used_for": "14 receptor structure models",
-  "status": "used",
-  "artifact": "data/structures/"
- },
- {
-  "tool": "AlphaFold API",
-  "category": "database/API",
-  "used_for": "model version resolution (v6), not pinned",
-  "status": "used",
-  "artifact": "scripts/fetch_receptor_structures.py"
- },
- {
-  "tool": "RCSB PDB + Data API",
-  "category": "database/API",
-  "used_for": "docking control complex 8A8C metadata",
-  "status": "used",
-  "artifact": "external/tools/rcsb_8a8c.json"
- },
- {
-  "tool": "PDBe API",
-  "category": "database/API",
-  "used_for": "8A8C summary cross-check",
-  "status": "used",
-  "artifact": "external/tools/pdbe_8a8c.json"
- },
- {
-  "tool": "KEGG REST",
-  "category": "database/API",
-  "used_for": "receptor gene entry (eco:b0489 lamB)",
-  "status": "used",
-  "artifact": "external/tools/kegg_lamb.txt"
- },
- {
-  "tool": "ICTV Master Species List",
-  "category": "database",
-  "used_for": "phage taxonomy reference",
-  "status": "used",
-  "artifact": "external/tools/ictv_msl_page.html"
- },
- {
-  "tool": "Europe PMC",
-  "category": "literature API",
-  "used_for": "PHP citation verification",
-  "status": "used",
-  "artifact": "external/tools/europepmc_php.json"
- },
- {
-  "tool": "CrossRef API",
-  "category": "literature API",
-  "used_for": "VirHostMatcher DOI metadata (10.1093/nar/gkx382)",
-  "status": "used",
-  "artifact": "external/tools/crossref_vhm.json"
- },
- {
-  "tool": "PubMed E-utilities",
-  "category": "literature API",
-  "used_for": "T5 pb5-FhuA structure paper lookup",
-  "status": "used",
-  "artifact": "external/tools/pubmed_pb5.json"
- },
- {
-  "tool": "InterPro API",
-  "category": "database/API",
-  "used_for": "receptor domain/family annotation (P06996)",
-  "status": "used",
-  "artifact": "external/tools/interpro_P06996.json"
- },
- {
-  "tool": "PhagesDB API",
-  "category": "database/API",
-  "used_for": "host-genera coverage check (actinophage-centric; justifies building own corpus)",
-  "status": "used",
-  "artifact": "external/tools/phagesdb_phages.json"
- },
- {
-  "tool": "GTDB API",
-  "category": "database/API",
-  "used_for": "K. pneumoniae taxonomy verification",
-  "status": "used",
-  "artifact": "external/tools/gtdb_kleb.json"
- },
- {
-  "tool": "Wikidata SPARQL",
-  "category": "knowledge base",
-  "used_for": "gene-protein mapping probe (empty result for b0153 query; recorded)",
-  "status": "queried, empty",
-  "artifact": "external/tools/wikidata_btub.json"
- },
- {
-  "tool": "OpenAlex API",
-  "category": "literature API",
-  "used_for": "WIsH citation lookup (rate-limited after first success)",
-  "status": "used + rate-limited",
-  "artifact": "external/tools/openalex_wish.json"
- },
- {
-  "tool": "Virus-Host DB (genome.jp)",
-  "category": "database",
-  "used_for": "host-annotation cross-check (mirror 404 at pull time; retry pending)",
-  "status": "attempted, unavailable",
-  "artifact": "external/tools/"
- },
- {
-  "tool": "BV-BRC API",
-  "category": "database/API",
-  "used_for": "Klebsiella phage count cross-check (query syntax rejected; recorded)",
-  "status": "attempted, rejected",
-  "artifact": "external/tools/bvbrc_kleb.json"
- },
- {
-  "tool": "PHP (Lu et al. 2021)",
-  "category": "published tool",
-  "used_for": "head-to-head comparator, native + forced-binary",
-  "status": "used",
-  "artifact": "external/php/; results/php_headtohead.json"
- },
- {
-  "tool": "PyTorch",
-  "category": "package",
-  "used_for": "CNN/GNN/hybrid model training",
-  "status": "used",
-  "artifact": "results/interaction_cnn_seed*.pt"
- },
- {
-  "tool": "NumPy",
-  "category": "package",
-  "used_for": "numerical pipeline",
-  "status": "used",
-  "artifact": "throughout"
- },
- {
-  "tool": "pandas",
-  "category": "package",
-  "used_for": "all table processing",
-  "status": "used",
-  "artifact": "throughout"
- },
- {
-  "tool": "SciPy",
-  "category": "package",
-  "used_for": "Mann-Whitney tests, statistics",
-  "status": "used",
-  "artifact": "results/external_verification.json"
- },
- {
-  "tool": "scikit-learn",
-  "category": "package",
-  "used_for": "k-mer LR baseline, group splits, metrics",
-  "status": "used",
-  "artifact": "results/interaction_cnn_seed*.json"
- },
- {
-  "tool": "Biopython",
-  "category": "package",
-  "used_for": "GenBank parsing, ProtParam cross-check, pairwise identity",
-  "status": "used",
-  "artifact": "results/external_verification.json"
- },
- {
-  "tool": "Matplotlib",
-  "category": "package",
-  "used_for": "figures 1-8",
-  "status": "used",
-  "artifact": "paper/figures/"
- },
- {
-  "tool": "logomaker",
-  "category": "package",
-  "used_for": "fiber-tip motif logo (figure 9)",
-  "status": "used",
-  "artifact": "paper/figures/fig9_fiber_tip_logo.png"
- },
- {
-  "tool": "statsmodels",
-  "category": "package",
-  "used_for": "statistical support for extended math appendix",
-  "status": "used",
-  "artifact": "results/"
- },
- {
-  "tool": "duckdb",
-  "category": "package",
-  "used_for": "SQL analytics over result tables (screen cluster stats)",
-  "status": "used",
-  "artifact": "results/"
- },
- {
-  "tool": "pytest",
-  "category": "package",
-  "used_for": "26 hermetic tests",
-  "status": "used",
-  "artifact": "tests/"
- },
- {
-  "tool": "pandoc",
-  "category": "tool",
-  "used_for": "paper HTML build",
-  "status": "used",
-  "artifact": "paper/"
- },
- {
-  "tool": "wkhtmltopdf",
-  "category": "tool",
-  "used_for": "paper PDF build",
-  "status": "used",
-  "artifact": "paper/paper.pdf"
- },
- {
-  "tool": "EBI EB-eye search API",
-  "category": "search API",
-  "used_for": "cross-resource lookup for 8A8C",
-  "status": "used",
-  "artifact": "external/tools/ebeye_8a8c.json"
- },
- {
-  "tool": "GitHub",
-  "category": "platform",
-  "used_for": "PHP source clone + project repository hosting",
-  "status": "used",
-  "artifact": "external/php/"
- },
- {
-  "tool": "Python 3.10",
-  "category": "runtime",
-  "used_for": "all pipeline code",
-  "status": "used",
-  "artifact": "src/ scripts/ tests/"
- },
- {
-  "tool": "pdflatex (TeX Live)",
-  "category": "tool",
-  "used_for": "PDF engine attempt (missing xcolor in sandbox; recorded, wkhtmltopdf used instead)",
-  "status": "attempted, unavailable",
-  "artifact": "/tmp/paper.pdf"
- }
+  {
+    "tool": "NCBI Nucleotide E-utilities",
+    "category": "database/API",
+    "used_for": "phage genome pulls (title queries, backoff)",
+    "status": "used",
+    "artifact": "data/raw/genbank/"
+  },
+  {
+    "tool": "NCBI GenBank records",
+    "category": "database",
+    "used_for": "RBP CDS mining + host fields",
+    "status": "used",
+    "artifact": "data/processed/phage_rbp_table.csv"
+  },
+  {
+    "tool": "NCBI Taxonomy (esummary)",
+    "category": "database/API",
+    "used_for": "species identity verification (taxid 573)",
+    "status": "used",
+    "artifact": "external/tools/ncbi_tax_573.json"
+  },
+  {
+    "tool": "NCBI nuccore esearch (Virus scope)",
+    "category": "database/API",
+    "used_for": "corpus-size sanity counts",
+    "status": "used",
+    "artifact": "external/tools/ncbi_virus_kleb_count.json"
+  },
+  {
+    "tool": "NCBI Datasets v2 API",
+    "category": "database/API",
+    "used_for": "candidate genome metadata probe (no assembly-level record for PZ accessions; recorded)",
+    "status": "queried, no record",
+    "artifact": "external/tools/ncbi_datasets_PZ797503.json"
+  },
+  {
+    "tool": "NCBI Protein efetch",
+    "category": "database/API",
+    "used_for": "independent accession verification (OmpC P06996 = OMPC_ECOLI)",
+    "status": "used",
+    "artifact": "external/tools/ncbi_protein_P06996.fasta"
+  },
+  {
+    "tool": "ENA Browser/Portal API",
+    "category": "database/API",
+    "used_for": "candidate verification (PZ797503 = E. phage vB_EscC_ArakU1, 60,473 bp)",
+    "status": "used",
+    "artifact": "external/tools/ena_PZ797503_report.json"
+  },
+  {
+    "tool": "UniProt REST",
+    "category": "database/API",
+    "used_for": "14 receptor sequences + annotations (live accession resolution)",
+    "status": "used",
+    "artifact": "data/processed/host_receptor_panel.csv; external/tools/uniprot_P06996.json"
+  },
+  {
+    "tool": "AlphaFold Protein Structure DB",
+    "category": "database",
+    "used_for": "14 receptor structure models",
+    "status": "used",
+    "artifact": "data/raw/structures/"
+  },
+  {
+    "tool": "AlphaFold API",
+    "category": "database/API",
+    "used_for": "model version resolution (v6), not pinned",
+    "status": "used",
+    "artifact": "scripts/fetch_receptor_structures.py"
+  },
+  {
+    "tool": "RCSB PDB + Data API",
+    "category": "database/API",
+    "used_for": "docking control complex 8A8C metadata",
+    "status": "used",
+    "artifact": "external/tools/rcsb_8a8c.json"
+  },
+  {
+    "tool": "PDBe API",
+    "category": "database/API",
+    "used_for": "8A8C summary cross-check",
+    "status": "used",
+    "artifact": "external/tools/pdbe_8a8c.json"
+  },
+  {
+    "tool": "KEGG REST",
+    "category": "database/API",
+    "used_for": "receptor gene entry (eco:b0489 lamB)",
+    "status": "used",
+    "artifact": "external/tools/kegg_lamb.txt"
+  },
+  {
+    "tool": "ICTV Master Species List",
+    "category": "database",
+    "used_for": "phage taxonomy reference",
+    "status": "used",
+    "artifact": "external/tools/ictv_msl_page.html"
+  },
+  {
+    "tool": "Europe PMC",
+    "category": "literature API",
+    "used_for": "PHP citation verification",
+    "status": "used",
+    "artifact": "external/tools/europepmc_php.json"
+  },
+  {
+    "tool": "CrossRef API",
+    "category": "literature API",
+    "used_for": "VirHostMatcher DOI metadata (10.1093/nar/gkx382)",
+    "status": "used",
+    "artifact": "external/tools/crossref_vhm.json"
+  },
+  {
+    "tool": "PubMed E-utilities",
+    "category": "literature API",
+    "used_for": "T5 pb5-FhuA structure paper lookup",
+    "status": "used",
+    "artifact": "external/tools/pubmed_pb5.json"
+  },
+  {
+    "tool": "InterPro API",
+    "category": "database/API",
+    "used_for": "receptor domain/family annotation (P06996)",
+    "status": "used",
+    "artifact": "external/tools/interpro_P06996.json"
+  },
+  {
+    "tool": "PhagesDB API",
+    "category": "database/API",
+    "used_for": "host-genera coverage check (actinophage-centric; justifies building own corpus)",
+    "status": "used",
+    "artifact": "external/tools/phagesdb_phages.json"
+  },
+  {
+    "tool": "GTDB API",
+    "category": "database/API",
+    "used_for": "K. pneumoniae taxonomy verification",
+    "status": "used",
+    "artifact": "external/tools/gtdb_kleb.json"
+  },
+  {
+    "tool": "Wikidata SPARQL",
+    "category": "knowledge base",
+    "used_for": "gene-protein mapping probe (empty result for b0153 query; recorded)",
+    "status": "queried, empty",
+    "artifact": "external/tools/wikidata_btub.json"
+  },
+  {
+    "tool": "OpenAlex API",
+    "category": "literature API",
+    "used_for": "WIsH citation lookup (rate-limited after first success)",
+    "status": "used + rate-limited",
+    "artifact": "external/tools/openalex_wish.json"
+  },
+  {
+    "tool": "Virus-Host DB (genome.jp)",
+    "category": "database",
+    "used_for": "host-annotation cross-check (mirror 404 at pull time; retry pending)",
+    "status": "attempted, unavailable",
+    "artifact": "external/tools/"
+  },
+  {
+    "tool": "BV-BRC API",
+    "category": "database/API",
+    "used_for": "Klebsiella phage count cross-check (query syntax rejected; recorded)",
+    "status": "attempted, rejected",
+    "artifact": "external/tools/bvbrc_kleb.json"
+  },
+  {
+    "tool": "PHP (Lu et al. 2021)",
+    "category": "published tool",
+    "used_for": "head-to-head comparator, native + forced-binary",
+    "status": "used",
+    "artifact": "external/php/; results/php_headtohead.json"
+  },
+  {
+    "tool": "PyTorch",
+    "category": "package",
+    "used_for": "CNN/GNN/hybrid model training",
+    "status": "used",
+    "artifact": "results/interaction_cnn_seed*.pt"
+  },
+  {
+    "tool": "NumPy",
+    "category": "package",
+    "used_for": "numerical pipeline",
+    "status": "used",
+    "artifact": "throughout"
+  },
+  {
+    "tool": "pandas",
+    "category": "package",
+    "used_for": "all table processing",
+    "status": "used",
+    "artifact": "throughout"
+  },
+  {
+    "tool": "SciPy",
+    "category": "package",
+    "used_for": "Mann-Whitney tests, statistics",
+    "status": "used",
+    "artifact": "results/external_verification.json"
+  },
+  {
+    "tool": "scikit-learn",
+    "category": "package",
+    "used_for": "k-mer LR baseline, group splits, metrics",
+    "status": "used",
+    "artifact": "results/interaction_cnn_seed*.json"
+  },
+  {
+    "tool": "Biopython",
+    "category": "package",
+    "used_for": "GenBank parsing, ProtParam cross-check, pairwise identity",
+    "status": "used",
+    "artifact": "results/external_verification.json"
+  },
+  {
+    "tool": "Matplotlib",
+    "category": "package",
+    "used_for": "figures 1-8",
+    "status": "used",
+    "artifact": "paper/figures/"
+  },
+  {
+    "tool": "logomaker",
+    "category": "package",
+    "used_for": "fiber-tip motif logo (figure 9)",
+    "status": "used",
+    "artifact": "paper/figures/fig9_fiber_tip_logo.png"
+  },
+  {
+    "tool": "statsmodels",
+    "category": "package",
+    "used_for": "statistical support for extended math appendix",
+    "status": "used",
+    "artifact": "results/"
+  },
+  {
+    "tool": "duckdb",
+    "category": "package",
+    "used_for": "SQL analytics over result tables (screen cluster stats)",
+    "status": "used",
+    "artifact": "results/"
+  },
+  {
+    "tool": "pytest",
+    "category": "package",
+    "used_for": "26 hermetic tests",
+    "status": "used",
+    "artifact": "tests/"
+  },
+  {
+    "tool": "pandoc",
+    "category": "tool",
+    "used_for": "paper HTML build",
+    "status": "used",
+    "artifact": "paper/"
+  },
+  {
+    "tool": "wkhtmltopdf",
+    "category": "tool",
+    "used_for": "paper PDF build",
+    "status": "used",
+    "artifact": "paper/paper.pdf"
+  },
+  {
+    "tool": "EBI EB-eye search API",
+    "category": "search API",
+    "used_for": "cross-resource lookup for 8A8C",
+    "status": "used",
+    "artifact": "external/tools/ebeye_8a8c.json"
+  },
+  {
+    "tool": "GitHub",
+    "category": "platform",
+    "used_for": "PHP source clone + project repository hosting",
+    "status": "used",
+    "artifact": "external/php/"
+  },
+  {
+    "tool": "Python 3.10",
+    "category": "runtime",
+    "used_for": "all pipeline code",
+    "status": "used",
+    "artifact": "src/ scripts/ tests/"
+  },
+  {
+    "tool": "pdflatex (TeX Live)",
+    "category": "tool",
+    "used_for": "PDF engine attempt (missing xcolor in sandbox; recorded, wkhtmltopdf used instead)",
+    "status": "attempted, unavailable",
+    "artifact": "/tmp/paper.pdf"
+  }
 ]
