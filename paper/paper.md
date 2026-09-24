@@ -375,7 +375,7 @@ Three scoring families are implemented and compared:
    coupling. Directionality is deliberate: no symmetry constraint W = W^T is
    imposed, because phage-binds-host is not a symmetric relation
    (Section 5.4).
-3. **Hybrid**: a learned convex combination (Eq. 9) of the bilinear logit
+3. **Hybrid**: a learned linear combination (Eq. 9) of the bilinear logit
    and a k-mer interaction head. The k-mer head feeds Hadamard interaction
    features (Eq. 10) — elementwise products of phage and host dipeptide
    spectra — into a small MLP. Hadamard features let the model learn
