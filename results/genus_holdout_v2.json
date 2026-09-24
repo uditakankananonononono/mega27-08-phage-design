@@ -1,0 +1,56 @@
+{
+  "config": {
+    "seeds": [
+      7,
+      42,
+      123
+    ],
+    "epochs": 20,
+    "max_len": 600,
+    "emb": 64,
+    "task": "3-way host panel scoring; Sal=positive, Ec/Kp=negatives",
+    "split": "train Ec+Kp phages (group by accession); test = all Salmonella phages",
+    "n_salmonella_phages": 84,
+    "n_test_rows": 252
+  },
+  "seeds": {
+    "7": {
+      "test_auroc": 0.6692885487528345,
+      "test_auprc": 0.4266947153492216,
+      "test_acc": 0.5873015873015873,
+      "choice3_accuracy": 0.32142857142857145,
+      "choice3_n": 84,
+      "baseline_kmer_lr": {
+        "test_auroc": 0.485969387755102,
+        "test_auprc": 0.32623348642263517
+      }
+    },
+    "42": {
+      "test_auroc": 0.6989087301587302,
+      "test_auprc": 0.46173642337869036,
+      "test_acc": 0.5912698412698413,
+      "choice3_accuracy": 0.42857142857142855,
+      "choice3_n": 84,
+      "baseline_kmer_lr": {
+        "test_auroc": 0.5886479591836735,
+        "test_auprc": 0.41458639483708204
+      }
+    },
+    "123": {
+      "test_auroc": 0.7016014739229025,
+      "test_auprc": 0.4513785567491749,
+      "test_acc": 0.6150793650793651,
+      "choice3_accuracy": 0.35714285714285715,
+      "choice3_n": 84,
+      "baseline_kmer_lr": {
+        "test_auroc": 0.5735544217687075,
+        "test_auprc": 0.40049018605567027
+      }
+    }
+  },
+  "cnn_auroc_mean": 0.6899329176114891,
+  "cnn_auroc_sd": 0.01463910724563973,
+  "choice3_acc_mean": 0.36904761904761907,
+  "kmerlr_auroc_mean": 0.549390589569161,
+  "runtime_s": 299.4
+}
