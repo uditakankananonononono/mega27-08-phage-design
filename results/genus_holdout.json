@@ -1,0 +1,157 @@
+{
+  "config": {
+    "seeds": [
+      7,
+      42,
+      123
+    ],
+    "epochs": 20,
+    "max_len": 600,
+    "emb": 64,
+    "task": "binary host-range (annotated host vs other species)",
+    "split": "genus holdout, group by accession, both directions"
+  },
+  "directions": {
+    "E2K": {
+      "train_species": "Escherichia coli",
+      "test_species": "Klebsiella pneumoniae",
+      "seeds": {
+        "7": {
+          "test_auroc": 0.0,
+          "test_auprc": 0.30770469793383604,
+          "test_acc": 0.0,
+          "val_auroc": 1.0,
+          "test_choice_accuracy": 0.0,
+          "test_choice_n": 359,
+          "n_train_phages": 366,
+          "n_test_phages": 359,
+          "baseline_kmer_lr": {
+            "test_auroc": 0.0,
+            "test_auprc": 0.307728293780435,
+            "test_acc": 0.0
+          },
+          "protein_novelty": {
+            "n_test_proteins": 581,
+            "n_novel_proteins": 567,
+            "novel_fraction": 0.9759036144578314
+          }
+        },
+        "42": {
+          "test_auroc": 0.0,
+          "test_auprc": 0.307770945358735,
+          "test_acc": 0.0,
+          "val_auroc": 1.0,
+          "test_choice_accuracy": 0.0,
+          "test_choice_n": 359,
+          "n_train_phages": 366,
+          "n_test_phages": 359,
+          "baseline_kmer_lr": {
+            "test_auroc": 0.0,
+            "test_auprc": 0.30773305007869856,
+            "test_acc": 0.0
+          },
+          "protein_novelty": {
+            "n_test_proteins": 581,
+            "n_novel_proteins": 567,
+            "novel_fraction": 0.9759036144578314
+          }
+        },
+        "123": {
+          "test_auroc": 0.0,
+          "test_auprc": 0.3077066706882731,
+          "test_acc": 0.0,
+          "val_auroc": 1.0,
+          "test_choice_accuracy": 0.0,
+          "test_choice_n": 359,
+          "n_train_phages": 366,
+          "n_test_phages": 359,
+          "baseline_kmer_lr": {
+            "test_auroc": 0.0,
+            "test_auprc": 0.3077398788402331,
+            "test_acc": 0.0
+          },
+          "protein_novelty": {
+            "n_test_proteins": 581,
+            "n_novel_proteins": 566,
+            "novel_fraction": 0.9741824440619621
+          }
+        }
+      },
+      "cnn_auroc_mean": 0.0,
+      "cnn_auroc_sd": 0.0,
+      "kmerlr_auroc_mean": 0.0,
+      "choice_acc_mean": 0.0
+    },
+    "K2E": {
+      "train_species": "Klebsiella pneumoniae",
+      "test_species": "Escherichia coli",
+      "seeds": {
+        "7": {
+          "test_auroc": 0.0,
+          "test_auprc": 0.30763102031085865,
+          "test_acc": 0.0,
+          "val_auroc": 1.0,
+          "test_choice_accuracy": 0.0,
+          "test_choice_n": 431,
+          "n_train_phages": 305,
+          "n_test_phages": 431,
+          "baseline_kmer_lr": {
+            "test_auroc": 0.0,
+            "test_auprc": 0.30763647503994374,
+            "test_acc": 0.0
+          },
+          "protein_novelty": {
+            "n_test_proteins": 866,
+            "n_novel_proteins": 851,
+            "novel_fraction": 0.9826789838337182
+          }
+        },
+        "42": {
+          "test_auroc": 0.0,
+          "test_auprc": 0.30763563984624903,
+          "test_acc": 0.0,
+          "val_auroc": 1.0,
+          "test_choice_accuracy": 0.0,
+          "test_choice_n": 431,
+          "n_train_phages": 305,
+          "n_test_phages": 431,
+          "baseline_kmer_lr": {
+            "test_auroc": 0.0,
+            "test_auprc": 0.30763637334871974,
+            "test_acc": 0.0
+          },
+          "protein_novelty": {
+            "n_test_proteins": 866,
+            "n_novel_proteins": 851,
+            "novel_fraction": 0.9826789838337182
+          }
+        },
+        "123": {
+          "test_auroc": 0.0,
+          "test_auprc": 0.30763610072152253,
+          "test_acc": 0.0,
+          "val_auroc": 1.0,
+          "test_choice_accuracy": 0.0,
+          "test_choice_n": 431,
+          "n_train_phages": 305,
+          "n_test_phages": 431,
+          "baseline_kmer_lr": {
+            "test_auroc": 0.0,
+            "test_auprc": 0.3076370263495351,
+            "test_acc": 0.0
+          },
+          "protein_novelty": {
+            "n_test_proteins": 866,
+            "n_novel_proteins": 851,
+            "novel_fraction": 0.9826789838337182
+          }
+        }
+      },
+      "cnn_auroc_mean": 0.0,
+      "cnn_auroc_sd": 0.0,
+      "kmerlr_auroc_mean": 0.0,
+      "choice_acc_mean": 0.0
+    }
+  },
+  "runtime_s": 354.4
+}
