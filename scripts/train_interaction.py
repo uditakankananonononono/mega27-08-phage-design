@@ -34,7 +34,7 @@ MAX_RBP = 4
 MAX_LEN = 600
 EMB = 64
 EPOCHS = 20
-SEED = 7
+SEED = int(sys.argv[1]) if len(sys.argv) > 1 else 7
 
 
 def load_task():
@@ -206,8 +206,10 @@ def main():
         "history": history,
     }
     Path("results").mkdir(exist_ok=True)
-    Path("results/interaction_cnn.json").write_text(json.dumps(result, indent=2))
-    torch.save(model.state_dict(), "results/interaction_cnn.pt")
+    Path(f"results/interaction_cnn_seed{SEED}.json").write_text(json.dumps(result, indent=2))
+    torch.save(model.state_dict(), f"results/interaction_cnn_seed{SEED}.pt")
+    if SEED == 7:
+        import shutil; shutil.copy(f"results/interaction_cnn_seed{SEED}.pt", "results/interaction_cnn.pt")
     print(f"\nTEST  AUROC={te_auroc:.3f} AUPRC={te_auprc:.3f} acc={te_acc:.3f}")
     print(f"runtime {result['runtime_s']}s")
 
