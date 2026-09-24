@@ -25,3 +25,12 @@ def test_physicochemical_shape_and_values():
     assert m.shape == (4, 3)
     assert m[0, 2] == -1  # Asp charged -1
     assert m[3, 2] == 1   # Arg charged +1
+
+
+def test_literature_values_locked():
+    from phage_design.features.sequence import AA, CHARGE, HYDROPATHY, VOLUME
+    assert AA == "ACDEFGHIKLMNPQRSTVWY"
+    assert HYDROPATHY["A"] == 1.8 and HYDROPATHY["I"] == 4.5 and HYDROPATHY["R"] == -4.5
+    assert HYDROPATHY["V"] == 4.2 and HYDROPATHY["W"] == -0.9
+    assert CHARGE["D"] == -1 and CHARGE["K"] == 1 and CHARGE["A"] == 0
+    assert VOLUME["G"] == 48 and VOLUME["W"] == 163

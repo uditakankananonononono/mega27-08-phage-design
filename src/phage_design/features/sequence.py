@@ -19,14 +19,15 @@ AA = "ACDEFGHIKLMNPQRSTVWY"
 AA_INDEX = {a: i for i, a in enumerate(AA)}
 
 # Kyte & Doolittle 1982 hydropathy.
-HYDROPATHY = dict(zip(AA, [-0.9, 2.5, -3.5, -3.5, 2.8, -0.4, -3.2, 4.5, -3.9, 3.8,
-                           1.9, -3.5, -1.6, -3.5, -4.5, -0.8, -0.7, 4.2, -0.9, -1.3]))
+# AA order ACDEFGHIKLMNPQRSTVWY (Kyte & Doolittle 1982)
+HYDROPATHY = dict(zip(AA, [1.8, 2.5, -3.5, -3.5, 2.8, -0.4, -3.2, 4.5, -3.9, 3.8,
+                           1.9, -3.5, -1.6, -3.5, -4.5, -0.8, -0.7, -0.9, -1.3, 4.2]))
 # Approximate residue volumes (A^3), Zamyatnin 1972.
-VOLUME = dict(zip(AA, [67, 96, 91, 109, 86, 82, 48, 0.1, 118, 124,
-                       124, 135, 124, 132, 90, 73, 93, 163, 141, 105]))
+VOLUME = dict(zip(AA, [67, 86, 91, 109, 135, 48, 118, 124, 135, 124,
+                       124, 96, 90, 114, 148, 73, 93, 163, 141, 105]))
 # Charge at pH 7 (D,E negative; K,R,H positive).
-CHARGE = dict(zip(AA, [0, 0, 0, -1, -1, 0, 0, 0, 0.1, 0,
-                       0, 1, 0, 0, 0, 1, 0, 0, 0, 0]))
+CHARGE = dict(zip(AA, [0, 0, -1, -1, 0, 0, 0.1, 0, 1, 0,
+                       0, 0, 0, 0, 1, 0, 0, 0, 0, 0]))
 
 
 def clean_sequence(seq: str) -> str:
