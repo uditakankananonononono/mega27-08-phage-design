@@ -14,8 +14,25 @@ AFDB = "https://alphafold.ebi.ac.uk/files"
 PDB = "https://files.rcsb.org/download"
 
 
-def fetch_alphafold_pdb(uniprot_acc: str, version: int = 4) -> str | None:
-    """AlphaFold DB model (PDB format) for a UniProt accession, else None."""
+def alphafold_metadata(uniprot_acc: str) -> dict | None:
+    """AlphaFold DB API record: latest model version and pLDDT confidence."""
+    time.sleep(0.3)
+    r = requests.get(f"https://alphafold.ebi.ac.uk/api/prediction/{uniprot_acc}", timeout=30)
+    if r.status_code != 200 or not r.text.strip():
+        return None
+    rec = r.json()[0]
+    return {"latest_version": rec["latestVersion"],
+            "mean_plddt": rec["globalMetricValue"]}
+
+
+def fetch_alphafold_pdb(uniprot_acc: str, version: int | None = None) -> str | None:
+    """AlphaFold DB model (PDB format) for a UniProt accession, else None.
+    Without an explicit version, the API's latestVersion is used."""
+    if version is None:
+        meta = alphafold_metadata(uniprot_acc)
+        if meta is None:
+            return None
+        version = meta["latest_version"]
     time.sleep(0.3)
     url = f"{AFDB}/AF-{uniprot_acc}-F1-model_v{version}.pdb"
     r = requests.get(url, timeout=60)
