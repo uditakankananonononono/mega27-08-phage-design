@@ -1,0 +1,1605 @@
+{
+ "benchmark": "PHP (Wang et al. 2020, Front Microbiol) head-to-head on the 158 held-out test phages of this work",
+ "php_version": "github.com/congyulu-bioinfo/PHP master, FullLength/10k/5k/3k/1k GMM models + hostKmer_60105_kmer4 (60,105 prokaryotic genomes)",
+ "n_test": 158,
+ "label_counts": {
+  "E. coli": 96,
+  "K. pneumoniae": 62
+ },
+ "php_native_top1_within_pair_accuracy": 0.17721518987341772,
+ "php_native_top1_within_pair_correct": 28,
+ "php_native_top1_outside_pair": 110,
+ "php_forced_binary_accuracy": 0.6962025316455697,
+ "php_forced_binary_correct": 110,
+ "this_work_test_accuracy_seed7": 0.93,
+ "this_work_test_auroc_seed7": 0.973,
+ "this_work_test_accuracy_seed42": 0.911,
+ "this_work_test_accuracy_seed123": 0.953,
+ "caveats": [
+  "PHP GMM models were pickled under scikit-learn 0.22; loaded under 1.7.2 with InconsistentVersionWarning - scores may be degraded vs the original environment (PHP ships no version-pinned environment).",
+  "PHP is a genome-wide 60,105-way host predictor, not a binary classifier; the forced-binary number (max score over the 2,336 E. coli vs 377 K. pneumoniae reference genomes) is the most favorable binary adaptation of its output.",
+  "Native PHP top-1 never predicted K. pneumoniae for any of the 62 Klebsiella phages in this test set."
+ ],
+ "per_phage": [
+  {
+   "accession": "PZ379541",
+   "truth": "E. coli",
+   "php_top1_species": "Buttiauxella gaviniae",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1450.4107512155929,
+   "php_maxscore_kleb": 1448.3427483455118
+  },
+  {
+   "accession": "OQ817854",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": true,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1447.391859790694,
+   "php_maxscore_kleb": 1444.0845113845162
+  },
+  {
+   "accession": "PZ797503",
+   "truth": "E. coli",
+   "php_top1_species": "Enterobacter sp. ODB01",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1453.4693609939297,
+   "php_maxscore_kleb": 1452.5610979511237
+  },
+  {
+   "accession": "PZ433559",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Corynebacterium sp. HMSC063A05",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1429.1883616040177,
+   "php_maxscore_kleb": 1427.928137750088
+  },
+  {
+   "accession": "PZ386961",
+   "truth": "E. coli",
+   "php_top1_species": "Gammaproteobacteria bacterium UBA6940",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1447.5179331196719,
+   "php_maxscore_kleb": 1445.6845272110932
+  },
+  {
+   "accession": "PZ440473",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1451.0959361378796,
+   "php_maxscore_kleb": 1450.98488056929
+  },
+  {
+   "accession": "NC_105106",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": true,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1453.5253584895597,
+   "php_maxscore_kleb": 1452.5399334439066
+  },
+  {
+   "accession": "PV357749",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Halieaceae bacterium UBA3993",
+   "php_top1_correct": false,
+   "php_forced_pred": "K. pneumoniae",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1433.4401154933132,
+   "php_maxscore_kleb": 1433.6660260863637
+  },
+  {
+   "accession": "PZ542107",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1451.0434250598184,
+   "php_maxscore_kleb": 1450.338376174172
+  },
+  {
+   "accession": "PZ445405",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": true,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1455.6891239135723,
+   "php_maxscore_kleb": 1453.6584510191092
+  },
+  {
+   "accession": "PZ445463",
+   "truth": "E. coli",
+   "php_top1_species": "Shigella flexneri",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1458.455971515397,
+   "php_maxscore_kleb": 1455.0072812094204
+  },
+  {
+   "accession": "PZ227171",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1451.9162588180566,
+   "php_maxscore_kleb": 1451.680759641802
+  },
+  {
+   "accession": "OM867526",
+   "truth": "E. coli",
+   "php_top1_species": "Nitrosomonas communis",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1456.6610881539698,
+   "php_maxscore_kleb": 1456.0234889233684
+  },
+  {
+   "accession": "PZ166176",
+   "truth": "E. coli",
+   "php_top1_species": "Commensalibacter intestini",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1452.432160252191,
+   "php_maxscore_kleb": 1450.9286933784572
+  },
+  {
+   "accession": "PX670413",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Halieaceae bacterium UBA3993",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1437.6121407179503,
+   "php_maxscore_kleb": 1437.2199426691352
+  },
+  {
+   "accession": "PZ618369",
+   "truth": "E. coli",
+   "php_top1_species": "Citrobacter sp. MGH105",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1447.8665200508706,
+   "php_maxscore_kleb": 1447.4716395207577
+  },
+  {
+   "accession": "PV402687",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1446.5004406856224,
+   "php_maxscore_kleb": 1445.3330655524328
+  },
+  {
+   "accession": "PX904472",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Citrobacter farmeri",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1453.1744494807651,
+   "php_maxscore_kleb": 1452.9627105502932
+  },
+  {
+   "accession": "PZ683213",
+   "truth": "E. coli",
+   "php_top1_species": "Citrobacter freundii complex sp. CFNIH11",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1446.8351505982205,
+   "php_maxscore_kleb": 1446.2266697933237
+  },
+  {
+   "accession": "PZ445530",
+   "truth": "E. coli",
+   "php_top1_species": "Desulfotalea sp.",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1456.2291366804484,
+   "php_maxscore_kleb": 1454.80534907254
+  },
+  {
+   "accession": "PZ445470",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": true,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1450.7607662039177,
+   "php_maxscore_kleb": 1449.3718462464026
+  },
+  {
+   "accession": "PX670415",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Kluyvera intermedia",
+   "php_top1_correct": false,
+   "php_forced_pred": "K. pneumoniae",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1448.3349219610918,
+   "php_maxscore_kleb": 1448.6225022993594
+  },
+  {
+   "accession": "PZ445542",
+   "truth": "E. coli",
+   "php_top1_species": "Shigella dysenteriae",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1459.1113654612068,
+   "php_maxscore_kleb": 1458.130833535756
+  },
+  {
+   "accession": "PZ445411",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": true,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1447.7242671838212,
+   "php_maxscore_kleb": 1444.8497492376157
+  },
+  {
+   "accession": "OM418625",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": true,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1459.1185037982978,
+   "php_maxscore_kleb": 1455.8945714896943
+  },
+  {
+   "accession": "PZ871097",
+   "truth": "E. coli",
+   "php_top1_species": "Salmonella enterica",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1447.828796429274,
+   "php_maxscore_kleb": 1445.407582265211
+  },
+  {
+   "accession": "PZ736737",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Yersinia ruckeri",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1454.3482015325937,
+   "php_maxscore_kleb": 1453.0210888863812
+  },
+  {
+   "accession": "PZ534532",
+   "truth": "E. coli",
+   "php_top1_species": "Desulfotalea sp.",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1455.8595567003333,
+   "php_maxscore_kleb": 1454.3823942086105
+  },
+  {
+   "accession": "PQ821741",
+   "truth": "E. coli",
+   "php_top1_species": "Kluyvera intermedia",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1450.4311252436823,
+   "php_maxscore_kleb": 1450.3219810458675
+  },
+  {
+   "accession": "PZ386948",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": true,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1458.8974480130225,
+   "php_maxscore_kleb": 1457.537119411054
+  },
+  {
+   "accession": "PZ386970",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia sp. MOD1-EC7003",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1459.4377186814052,
+   "php_maxscore_kleb": 1457.3861683807165
+  },
+  {
+   "accession": "PZ386947",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": true,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1458.867203060614,
+   "php_maxscore_kleb": 1457.5253781752922
+  },
+  {
+   "accession": "PZ445516",
+   "truth": "E. coli",
+   "php_top1_species": "Nitrosomonadaceae bacterium",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1455.6468684830777,
+   "php_maxscore_kleb": 1455.0952477444662
+  },
+  {
+   "accession": "PX315804",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Halieaceae bacterium UBA5085",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1417.4679213823638,
+   "php_maxscore_kleb": 1416.3761693489964
+  },
+  {
+   "accession": "PZ533735",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Citrobacter sp. MGH109",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1455.0216290428086,
+   "php_maxscore_kleb": 1453.0042979866257
+  },
+  {
+   "accession": "NC_104629",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1451.909829672211,
+   "php_maxscore_kleb": 1451.5822278434114
+  },
+  {
+   "accession": "PV357746",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Bacillus solisilvae",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1433.0204876577336,
+   "php_maxscore_kleb": 1427.0854524544595
+  },
+  {
+   "accession": "PZ787336",
+   "truth": "E. coli",
+   "php_top1_species": "Buttiauxella noackiae",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1451.6765744924157,
+   "php_maxscore_kleb": 1448.6437117603043
+  },
+  {
+   "accession": "PZ789118",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Halieaceae bacterium UBA3993",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1438.5203480367666,
+   "php_maxscore_kleb": 1438.2364635518172
+  },
+  {
+   "accession": "PZ445424",
+   "truth": "E. coli",
+   "php_top1_species": "Citrobacter freundii",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1448.6619810438283,
+   "php_maxscore_kleb": 1445.8861056072892
+  },
+  {
+   "accession": "PX130993",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Enterobacteriaceae bacterium UBA3163",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1453.7420663043702,
+   "php_maxscore_kleb": 1453.195794830541
+  },
+  {
+   "accession": "PX024856",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia sp. MOD1-EC7003",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1460.117480416725,
+   "php_maxscore_kleb": 1458.1578708411084
+  },
+  {
+   "accession": "PX943615",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Shewanella halifaxensis",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1418.5430375614837,
+   "php_maxscore_kleb": 1416.9683843086918
+  },
+  {
+   "accession": "PZ533743",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Type-D symbiont of Plautia stali",
+   "php_top1_correct": false,
+   "php_forced_pred": "K. pneumoniae",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1428.6917006521242,
+   "php_maxscore_kleb": 1428.972514064872
+  },
+  {
+   "accession": "OR090985",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Kluyvera intermedia",
+   "php_top1_correct": false,
+   "php_forced_pred": "K. pneumoniae",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1449.4249302623475,
+   "php_maxscore_kleb": 1449.8659839603147
+  },
+  {
+   "accession": "PZ386963",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": true,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1452.9431687790977,
+   "php_maxscore_kleb": 1451.5063889456883
+  },
+  {
+   "accession": "PX666696",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Shigella dysenteriae",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1451.7285920222691,
+   "php_maxscore_kleb": 1451.6635153922077
+  },
+  {
+   "accession": "PX411090",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Methylovorus glucosotrophus",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1423.2631996789733,
+   "php_maxscore_kleb": 1421.1831558892775
+  },
+  {
+   "accession": "PZ445460",
+   "truth": "E. coli",
+   "php_top1_species": "Shigella flexneri",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1458.5139995769218,
+   "php_maxscore_kleb": 1455.4529100587242
+  },
+  {
+   "accession": "NC_130765",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1450.5464465300229,
+   "php_maxscore_kleb": 1450.0741396446322
+  },
+  {
+   "accession": "OM867527",
+   "truth": "E. coli",
+   "php_top1_species": "Citrobacter sp. MGH106",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1448.9163390578592,
+   "php_maxscore_kleb": 1445.8117384984594
+  },
+  {
+   "accession": "PV872879",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Halieaceae bacterium UBA5085",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1417.9288406081325,
+   "php_maxscore_kleb": 1415.5640278957935
+  },
+  {
+   "accession": "NC_105113",
+   "truth": "E. coli",
+   "php_top1_species": "Nitrosospira sp.",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1458.4073232737403,
+   "php_maxscore_kleb": 1457.6026693462925
+  },
+  {
+   "accession": "PQ621122",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Citrobacter sp. MGH109",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1454.9156101042183,
+   "php_maxscore_kleb": 1452.8357664570867
+  },
+  {
+   "accession": "PZ315864",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Bombiscardovia coagulans",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1399.076408769385,
+   "php_maxscore_kleb": 1396.4674229501425
+  },
+  {
+   "accession": "PZ445425",
+   "truth": "E. coli",
+   "php_top1_species": "Citrobacter freundii",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1447.4999375845425,
+   "php_maxscore_kleb": 1444.8609471914697
+  },
+  {
+   "accession": "PX060902",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Halieaceae bacterium UBA3993",
+   "php_top1_correct": false,
+   "php_forced_pred": "K. pneumoniae",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1440.370970127068,
+   "php_maxscore_kleb": 1440.3831086429304
+  },
+  {
+   "accession": "PZ445487",
+   "truth": "E. coli",
+   "php_top1_species": "Brenneria roseae",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1456.7382572775891,
+   "php_maxscore_kleb": 1455.621265911935
+  },
+  {
+   "accession": "PZ357121",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": true,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1448.6743011683866,
+   "php_maxscore_kleb": 1446.2685096176447
+  },
+  {
+   "accession": "NC_103859",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Shigella dysenteriae",
+   "php_top1_correct": false,
+   "php_forced_pred": "K. pneumoniae",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1451.3777269299112,
+   "php_maxscore_kleb": 1451.6269677222874
+  },
+  {
+   "accession": "PZ871100",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": true,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1448.1355231552297,
+   "php_maxscore_kleb": 1445.4657137947997
+  },
+  {
+   "accession": "PQ621121",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Citrobacter freundii complex sp. CFNIH12",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1455.159473059148,
+   "php_maxscore_kleb": 1454.170031241203
+  },
+  {
+   "accession": "PX521587",
+   "truth": "E. coli",
+   "php_top1_species": "Commensalibacter intestini",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1452.9058651686253,
+   "php_maxscore_kleb": 1451.4730825051395
+  },
+  {
+   "accession": "PZ256265",
+   "truth": "E. coli",
+   "php_top1_species": "Enterobacteriaceae bacterium B14",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1453.47616939633,
+   "php_maxscore_kleb": 1452.635531605075
+  },
+  {
+   "accession": "PX974332",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Shigella dysenteriae",
+   "php_top1_correct": false,
+   "php_forced_pred": "K. pneumoniae",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1453.2949291243299,
+   "php_maxscore_kleb": 1453.3661924748676
+  },
+  {
+   "accession": "PZ445539",
+   "truth": "E. coli",
+   "php_top1_species": "Kosakonia radicincitans",
+   "php_top1_correct": false,
+   "php_forced_pred": "K. pneumoniae",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1457.2731910148425,
+   "php_maxscore_kleb": 1457.5444308150552
+  },
+  {
+   "accession": "PZ445454",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": true,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1452.899922294893,
+   "php_maxscore_kleb": 1451.1631307992545
+  },
+  {
+   "accession": "PX915675",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Kluyvera cryocrescens",
+   "php_top1_correct": false,
+   "php_forced_pred": "K. pneumoniae",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1449.4955154976685,
+   "php_maxscore_kleb": 1449.8700294738182
+  },
+  {
+   "accession": "PZ715804",
+   "truth": "E. coli",
+   "php_top1_species": "Izhakiella capsodis",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1451.9074550546857,
+   "php_maxscore_kleb": 1450.7715355905095
+  },
+  {
+   "accession": "PZ445546",
+   "truth": "E. coli",
+   "php_top1_species": "Sphingobacterium faecium",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1452.479358445298,
+   "php_maxscore_kleb": 1450.5221752128143
+  },
+  {
+   "accession": "PZ445467",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia albertii",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1455.9018501398941,
+   "php_maxscore_kleb": 1452.3273237727185
+  },
+  {
+   "accession": "PX848766",
+   "truth": "E. coli",
+   "php_top1_species": "Aestuariibacter sp.",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1448.6500046549609,
+   "php_maxscore_kleb": 1446.4788165144735
+  },
+  {
+   "accession": "PZ721903",
+   "truth": "E. coli",
+   "php_top1_species": "Izhakiella capsodis",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1453.3201666207647,
+   "php_maxscore_kleb": 1452.0218919135564
+  },
+  {
+   "accession": "OR090977",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1452.061561477199,
+   "php_maxscore_kleb": 1451.7824361000175
+  },
+  {
+   "accession": "PZ055531",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Kluyvera cryocrescens",
+   "php_top1_correct": false,
+   "php_forced_pred": "K. pneumoniae",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1449.8223717878031,
+   "php_maxscore_kleb": 1450.035614595952
+  },
+  {
+   "accession": "PZ379542",
+   "truth": "E. coli",
+   "php_top1_species": "Buttiauxella noackiae",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1454.9152495558249,
+   "php_maxscore_kleb": 1453.558151081932
+  },
+  {
+   "accession": "PZ156446",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Halieaceae bacterium UBA3993",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1438.681337982056,
+   "php_maxscore_kleb": 1438.5966125336054
+  },
+  {
+   "accession": "PQ400079",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Citrobacter freundii complex sp. CFNIH3",
+   "php_top1_correct": false,
+   "php_forced_pred": "K. pneumoniae",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1446.1633573570134,
+   "php_maxscore_kleb": 1446.2835403695285
+  },
+  {
+   "accession": "PZ465525",
+   "truth": "E. coli",
+   "php_top1_species": "Pseudomonas sp. JGI 0001012-A11",
+   "php_top1_correct": false,
+   "php_forced_pred": "K. pneumoniae",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1432.2233528115457,
+   "php_maxscore_kleb": 1432.6452821106989
+  },
+  {
+   "accession": "PZ156442",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Citrobacter sp. MGH109",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1454.3772157408866,
+   "php_maxscore_kleb": 1452.4057415055033
+  },
+  {
+   "accession": "PZ154895",
+   "truth": "E. coli",
+   "php_top1_species": "Citrobacter freundii complex sp. CFNIH11",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1453.228914555487,
+   "php_maxscore_kleb": 1452.0917325022433
+  },
+  {
+   "accession": "PZ344153",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Brenneria roseae",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1455.4862327982946,
+   "php_maxscore_kleb": 1455.3390201479217
+  },
+  {
+   "accession": "PZ055535",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Halieaceae bacterium UBA3993",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1437.77288205868,
+   "php_maxscore_kleb": 1436.979799909468
+  },
+  {
+   "accession": "NC_104631",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1447.9728894788113,
+   "php_maxscore_kleb": 1447.3271358334641
+  },
+  {
+   "accession": "PZ533742",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Rhodospirillales bacterium 47_12_T64",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1462.1082278050783,
+   "php_maxscore_kleb": 1462.0827860404172
+  },
+  {
+   "accession": "PZ533729",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Halieaceae bacterium UBA3993",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1438.7243882545076,
+   "php_maxscore_kleb": 1438.6069891953807
+  },
+  {
+   "accession": "PZ618370",
+   "truth": "E. coli",
+   "php_top1_species": "Citrobacter sp. MGH105",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1447.962548211453,
+   "php_maxscore_kleb": 1447.4711475513
+  },
+  {
+   "accession": "NC_105792",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1449.2359249087963,
+   "php_maxscore_kleb": 1448.3123642155335
+  },
+  {
+   "accession": "PX131005",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Phytobacter palmae",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1459.3167626012198,
+   "php_maxscore_kleb": 1458.989512065859
+  },
+  {
+   "accession": "PZ445497",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": true,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1457.0679792501242,
+   "php_maxscore_kleb": 1456.0052110652587
+  },
+  {
+   "accession": "PX502252",
+   "truth": "E. coli",
+   "php_top1_species": "Nitrosomonas communis",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1445.886917495343,
+   "php_maxscore_kleb": 1445.6287066630355
+  },
+  {
+   "accession": "PZ445492",
+   "truth": "E. coli",
+   "php_top1_species": "Nitrosomonadaceae bacterium",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1455.4614206129527,
+   "php_maxscore_kleb": 1454.8716809350592
+  },
+  {
+   "accession": "PX418922",
+   "truth": "E. coli",
+   "php_top1_species": "Commensalibacter intestini",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1452.333723664258,
+   "php_maxscore_kleb": 1451.0545527067807
+  },
+  {
+   "accession": "PZ445540",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": true,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1461.5804139841352,
+   "php_maxscore_kleb": 1461.028212789002
+  },
+  {
+   "accession": "PZ533738",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Halieaceae bacterium UBA3993",
+   "php_top1_correct": false,
+   "php_forced_pred": "K. pneumoniae",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1437.4421370473685,
+   "php_maxscore_kleb": 1437.630853881953
+  },
+  {
+   "accession": "PZ324408",
+   "truth": "E. coli",
+   "php_top1_species": "Marinobacterium profundum",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1438.926399292639,
+   "php_maxscore_kleb": 1438.442391214464
+  },
+  {
+   "accession": "PZ049694",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia sp. MOD1-EC7003",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1459.9744631393976,
+   "php_maxscore_kleb": 1458.1595827108038
+  },
+  {
+   "accession": "PZ386969",
+   "truth": "E. coli",
+   "php_top1_species": "Citrobacter amalonaticus",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1454.8064008890192,
+   "php_maxscore_kleb": 1453.7795150493123
+  },
+  {
+   "accession": "PZ278545",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Kosakonia pseudosacchari",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1442.2678794648903,
+   "php_maxscore_kleb": 1441.6335614447278
+  },
+  {
+   "accession": "PZ168832",
+   "truth": "E. coli",
+   "php_top1_species": "Lelliottia amnigena",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1448.0735248976164,
+   "php_maxscore_kleb": 1447.473914734013
+  },
+  {
+   "accession": "PZ229304",
+   "truth": "E. coli",
+   "php_top1_species": "Sphingobacterium faecium",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1453.019170218131,
+   "php_maxscore_kleb": 1450.9822102012145
+  },
+  {
+   "accession": "PV946933",
+   "truth": "E. coli",
+   "php_top1_species": "Citrobacter freundii complex sp. CFNIH11",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1452.3955262499958,
+   "php_maxscore_kleb": 1451.3620987685724
+  },
+  {
+   "accession": "PZ786312",
+   "truth": "E. coli",
+   "php_top1_species": "Citrobacter sp. MGH105",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1455.1289678741443,
+   "php_maxscore_kleb": 1453.481457334898
+  },
+  {
+   "accession": "PZ445503",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": true,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1453.5732264239973,
+   "php_maxscore_kleb": 1451.8664093443126
+  },
+  {
+   "accession": "PZ379074",
+   "truth": "E. coli",
+   "php_top1_species": "Enterobacter sp. 638",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1449.779684755953,
+   "php_maxscore_kleb": 1449.3980045956746
+  },
+  {
+   "accession": "PZ445430",
+   "truth": "E. coli",
+   "php_top1_species": "Nitrosospira sp.",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1457.82796531717,
+   "php_maxscore_kleb": 1456.9912974310525
+  },
+  {
+   "accession": "PZ445440",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia sp. MOD1-EC7003",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1459.3864739390508,
+   "php_maxscore_kleb": 1457.5481870591866
+  },
+  {
+   "accession": "PX974333",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Salmonella enterica",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1448.272580131791,
+   "php_maxscore_kleb": 1447.8718711212293
+  },
+  {
+   "accession": "PZ445452",
+   "truth": "E. coli",
+   "php_top1_species": "Sphingobacterium faecium",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1452.851986555703,
+   "php_maxscore_kleb": 1450.9560840767044
+  },
+  {
+   "accession": "PZ445464",
+   "truth": "E. coli",
+   "php_top1_species": "Shigella flexneri",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1459.2281973956908,
+   "php_maxscore_kleb": 1456.051150585037
+  },
+  {
+   "accession": "PZ445456",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": true,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1445.8095137622092,
+   "php_maxscore_kleb": 1443.3819696188657
+  },
+  {
+   "accession": "PZ445471",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": true,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1453.074696691774,
+   "php_maxscore_kleb": 1451.4586102762348
+  },
+  {
+   "accession": "PZ465523",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": true,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1450.488925960529,
+   "php_maxscore_kleb": 1449.1522667962658
+  },
+  {
+   "accession": "PZ055533",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Rhodospirillales bacterium 47_12_T64",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1461.481190613061,
+   "php_maxscore_kleb": 1461.4077595003137
+  },
+  {
+   "accession": "PZ534511",
+   "truth": "E. coli",
+   "php_top1_species": "Desulfotalea sp.",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1455.1554251499915,
+   "php_maxscore_kleb": 1453.5438139326297
+  },
+  {
+   "accession": "PZ943414",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Citrobacter sp. MGH109",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1453.8978636487466,
+   "php_maxscore_kleb": 1451.8625620112102
+  },
+  {
+   "accession": "PZ386959",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": true,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1453.334512843473,
+   "php_maxscore_kleb": 1451.4964515827492
+  },
+  {
+   "accession": "PX655591",
+   "truth": "E. coli",
+   "php_top1_species": "Citrobacter pasteurii",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1446.22943874676,
+   "php_maxscore_kleb": 1445.439953008982
+  },
+  {
+   "accession": "PZ540269",
+   "truth": "E. coli",
+   "php_top1_species": "Citrobacter freundii",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1446.6493580593383,
+   "php_maxscore_kleb": 1443.8471059243648
+  },
+  {
+   "accession": "PQ724394",
+   "truth": "E. coli",
+   "php_top1_species": "Pragia fontium",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1456.262989737695,
+   "php_maxscore_kleb": 1454.9806947069285
+  },
+  {
+   "accession": "PZ050807",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": true,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1454.975073596533,
+   "php_maxscore_kleb": 1452.2528476566447
+  },
+  {
+   "accession": "PX670399",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Halieaceae bacterium UBA3993",
+   "php_top1_correct": false,
+   "php_forced_pred": "K. pneumoniae",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1437.9466007109695,
+   "php_maxscore_kleb": 1438.5967882159737
+  },
+  {
+   "accession": "PZ311406",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia sp. MOD1-EC7003",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1460.046951436519,
+   "php_maxscore_kleb": 1458.1702055167962
+  },
+  {
+   "accession": "PZ917099",
+   "truth": "E. coli",
+   "php_top1_species": "Citrobacter freundii complex sp. CFNIH9",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1456.0095004609186,
+   "php_maxscore_kleb": 1454.769168768904
+  },
+  {
+   "accession": "PZ871095",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": true,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1452.4510084225856,
+   "php_maxscore_kleb": 1450.8466362962452
+  },
+  {
+   "accession": "PZ445407",
+   "truth": "E. coli",
+   "php_top1_species": "Buttiauxella agrestis",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1453.6661391956427,
+   "php_maxscore_kleb": 1451.5563487465238
+  },
+  {
+   "accession": "PV963843",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Alteromonas confluentis",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1458.0184730912129,
+   "php_maxscore_kleb": 1456.2565522277841
+  },
+  {
+   "accession": "PZ440474",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1451.3211969352064,
+   "php_maxscore_kleb": 1451.0731766120311
+  },
+  {
+   "accession": "PZ554334",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": true,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1453.3290982607543,
+   "php_maxscore_kleb": 1451.6024727915387
+  },
+  {
+   "accession": "PV871783",
+   "truth": "E. coli",
+   "php_top1_species": "Vibrio diazotrophicus",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1454.62771638847,
+   "php_maxscore_kleb": 1454.2275560932148
+  },
+  {
+   "accession": "PZ496581",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia sp. MOD1-EC7003",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1460.2799526238969,
+   "php_maxscore_kleb": 1458.4005576403595
+  },
+  {
+   "accession": "PX502238",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Halieaceae bacterium UBA3993",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1439.0408312176523,
+   "php_maxscore_kleb": 1438.4527034720793
+  },
+  {
+   "accession": "PV833093",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1446.9969247862014,
+   "php_maxscore_kleb": 1440.9173077613152
+  },
+  {
+   "accession": "OQ863736",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Kluyvera georgiana",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1449.0645426414483,
+   "php_maxscore_kleb": 1448.9300735906284
+  },
+  {
+   "accession": "NC_129957",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Shigella dysenteriae",
+   "php_top1_correct": false,
+   "php_forced_pred": "K. pneumoniae",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1454.8689488606599,
+   "php_maxscore_kleb": 1454.9605687292483
+  },
+  {
+   "accession": "PX880099",
+   "truth": "E. coli",
+   "php_top1_species": "Commensalibacter intestini",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1452.2222523881373,
+   "php_maxscore_kleb": 1450.8628394598384
+  },
+  {
+   "accession": "PX880101",
+   "truth": "E. coli",
+   "php_top1_species": "Desulfotalea sp.",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1455.7490502016178,
+   "php_maxscore_kleb": 1454.2049725110808
+  },
+  {
+   "accession": "PZ445439",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": true,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1459.8052370357225,
+   "php_maxscore_kleb": 1458.5785340480272
+  },
+  {
+   "accession": "PZ445431",
+   "truth": "E. coli",
+   "php_top1_species": "Nitrosospira sp.",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1458.178135788602,
+   "php_maxscore_kleb": 1457.3571074285935
+  },
+  {
+   "accession": "PZ671982",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": true,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1450.6812393634482,
+   "php_maxscore_kleb": 1449.6462597216946
+  },
+  {
+   "accession": "PZ379296",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Kluyvera intermedia",
+   "php_top1_correct": false,
+   "php_forced_pred": "K. pneumoniae",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1450.0703437208924,
+   "php_maxscore_kleb": 1450.4535403992024
+  },
+  {
+   "accession": "PX985798",
+   "truth": "E. coli",
+   "php_top1_species": "Shigella flexneri",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1458.992774577107,
+   "php_maxscore_kleb": 1455.3515309857855
+  },
+  {
+   "accession": "PZ593571",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Shigella dysenteriae",
+   "php_top1_correct": false,
+   "php_forced_pred": "K. pneumoniae",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1462.5843503950944,
+   "php_maxscore_kleb": 1462.8571622164236
+  },
+  {
+   "accession": "PZ244635",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Brenneria roseae",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1455.2331217758767,
+   "php_maxscore_kleb": 1455.2245315469
+  },
+  {
+   "accession": "PX246281",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Enterobacteriaceae bacterium UBA1805",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1454.2829451335533,
+   "php_maxscore_kleb": 1452.156662777504
+  },
+  {
+   "accession": "PX405663",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": true,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1452.2415276236356,
+   "php_maxscore_kleb": 1451.0304536311078
+  },
+  {
+   "accession": "PZ156447",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "[Kluyvera] intestini",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1448.249152782868,
+   "php_maxscore_kleb": 1445.7694645529161
+  },
+  {
+   "accession": "PZ445436",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": true,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1458.7444797466437,
+   "php_maxscore_kleb": 1457.4470246611352
+  },
+  {
+   "accession": "PZ452604",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia sp. MOD1-EC7003",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1459.69719701622,
+   "php_maxscore_kleb": 1457.8438904741229
+  },
+  {
+   "accession": "PZ379185",
+   "truth": "E. coli",
+   "php_top1_species": "Buttiauxella gaviniae",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1450.6951828557649,
+   "php_maxscore_kleb": 1448.7180696582855
+  },
+  {
+   "accession": "PZ379550",
+   "truth": "E. coli",
+   "php_top1_species": "Buttiauxella gaviniae",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1450.4430355114694,
+   "php_maxscore_kleb": 1448.3808938649076
+  },
+  {
+   "accession": "PX946034",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Proteobacteria bacterium UBA1148",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1457.7506279196857,
+   "php_maxscore_kleb": 1457.540817495365
+  },
+  {
+   "accession": "PZ137471",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": true,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1453.539886672405,
+   "php_maxscore_kleb": 1452.576738747834
+  },
+  {
+   "accession": "PX872921",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Type-D symbiont of Plautia stali",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": false,
+   "php_maxscore_ecoli": 1426.6814565623881,
+   "php_maxscore_kleb": 1425.2211875698865
+  },
+  {
+   "accession": "PZ534515",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia coli",
+   "php_top1_correct": true,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1453.305213877222,
+   "php_maxscore_kleb": 1451.600343824748
+  },
+  {
+   "accession": "PZ386974",
+   "truth": "E. coli",
+   "php_top1_species": "Escherichia sp. MOD1-EC7003",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1460.258739026501,
+   "php_maxscore_kleb": 1458.3689875072384
+  },
+  {
+   "accession": "PZ445415",
+   "truth": "E. coli",
+   "php_top1_species": "Enterobacterales bacterium CwR94",
+   "php_top1_correct": false,
+   "php_forced_pred": "E. coli",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1448.689458546755,
+   "php_maxscore_kleb": 1448.2267030355092
+  },
+  {
+   "accession": "PZ278544",
+   "truth": "K. pneumoniae",
+   "php_top1_species": "Enterobacteriaceae bacterium UBA7460",
+   "php_top1_correct": false,
+   "php_forced_pred": "K. pneumoniae",
+   "php_forced_correct": true,
+   "php_maxscore_ecoli": 1448.3297009417681,
+   "php_maxscore_kleb": 1448.9950545806869
+  }
+ ]
+}
