@@ -1,0 +1,159 @@
+{
+ "protparam": {
+  "LamB": {
+   "species": "Escherichia coli",
+   "length": 446,
+   "gravy": -0.516,
+   "instability": 30.0,
+   "aromaticity": 0.137
+  },
+  "FhuA": {
+   "species": "Escherichia coli",
+   "length": 747,
+   "gravy": -0.481,
+   "instability": 30.0,
+   "aromaticity": 0.116
+  },
+  "OmpC": {
+   "species": "Escherichia coli",
+   "length": 367,
+   "gravy": -0.533,
+   "instability": 12.9,
+   "aromaticity": 0.142
+  },
+  "OmpA": {
+   "species": "Klebsiella pneumoniae",
+   "length": 344,
+   "gravy": -0.4,
+   "instability": 24.7,
+   "aromaticity": 0.099
+  },
+  "OmpF": {
+   "species": "Escherichia coli",
+   "length": 362,
+   "gravy": -0.398,
+   "instability": 13.8,
+   "aromaticity": 0.138
+  },
+  "Tsx": {
+   "species": "Escherichia coli",
+   "length": 294,
+   "gravy": -0.512,
+   "instability": 25.6,
+   "aromaticity": 0.184
+  },
+  "BtuB": {
+   "species": "Escherichia coli",
+   "length": 614,
+   "gravy": -0.534,
+   "instability": 24.6,
+   "aromaticity": 0.132
+  },
+  "FepA": {
+   "species": "Escherichia coli",
+   "length": 746,
+   "gravy": -0.581,
+   "instability": 29.0,
+   "aromaticity": 0.092
+  },
+  "TolC": {
+   "species": "Escherichia coli",
+   "length": 493,
+   "gravy": -0.427,
+   "instability": 34.5,
+   "aromaticity": 0.065
+  },
+  "YaeT_BamA": {
+   "species": "Escherichia coli",
+   "length": 810,
+   "gravy": -0.483,
+   "instability": 26.6,
+   "aromaticity": 0.121
+  },
+  "ompK36": {
+   "species": "Klebsiella pneumoniae",
+   "length": 366,
+   "gravy": -0.472,
+   "instability": 19.0,
+   "aromaticity": 0.137
+  },
+  "ompK35": {
+   "species": "Klebsiella pneumoniae",
+   "length": 359,
+   "gravy": -0.536,
+   "instability": 20.8,
+   "aromaticity": 0.139
+  },
+  "lamB": {
+   "species": "Klebsiella pneumoniae",
+   "length": 429,
+   "gravy": -0.56,
+   "instability": 31.4,
+   "aromaticity": 0.131
+  }
+ },
+ "homolog_identity": {
+  "LamB_vs_lamB": 0.629,
+  "OmpA_vs_OmpA": 0.751,
+  "OmpC_vs_ompK36": 0.701,
+  "OmpC_vs_ompK35": 0.44
+ },
+ "probe_mannwhitney": {
+  "E-LamB": {
+   "U": 35732.5,
+   "p_two_sided": 7.650844984841486e-39
+  },
+  "E-FhuA": {
+   "U": 151969.5,
+   "p_two_sided": 8.023116832750169e-126
+  },
+  "E-OmpC": {
+   "U": 8152.5,
+   "p_two_sided": 3.784049295667083e-104
+  },
+  "E-OmpA": {
+   "U": 25816.5,
+   "p_two_sided": 1.3182742424760816e-58
+  },
+  "E-OmpF": {
+   "U": 151248.5,
+   "p_two_sided": 2.069720243917091e-118
+  },
+  "E-Tsx": {
+   "U": 152022.0,
+   "p_two_sided": 3.6401721336104495e-125
+  },
+  "E-BtuB": {
+   "U": 152661.5,
+   "p_two_sided": 1.2640428594367267e-126
+  },
+  "E-FepA": {
+   "U": 150876.5,
+   "p_two_sided": 9.672055180749018e-122
+  },
+  "E-TolC": {
+   "U": 152318.5,
+   "p_two_sided": 6.144302446044763e-124
+  },
+  "E-YaeT_BamA": {
+   "U": 150897.5,
+   "p_two_sided": 3.023979421105485e-124
+  },
+  "K-ompK36": {
+   "U": 151736.0,
+   "p_two_sided": 9.036755973107628e-121
+  },
+  "K-ompK35": {
+   "U": 152865.5,
+   "p_two_sided": 3.4244552874529505e-131
+  },
+  "K-lamB": {
+   "U": 152750.5,
+   "p_two_sided": 3.723157738072757e-125
+  },
+  "K-OmpA": {
+   "U": 153076.5,
+   "p_two_sided": 1.8352650122633111e-124
+  }
+ }
+}

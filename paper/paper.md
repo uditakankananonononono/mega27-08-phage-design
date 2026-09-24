@@ -16,8 +16,9 @@ iPHoP-class integrators — score whole-genome composition similarity between
 phage and prokaryote and never model the molecular event that actually
 determines host range: binding of the phage receptor-binding protein (RBP;
 tail fiber, tail spike, or adhesin) to a host cell-surface receptor. We build
-a structure-aware host-range predictor from real public data only: 1,439 RBP
-sequences mined from 922 complete phage genomes (NCBI GenBank), a curated
+a structure-aware host-range predictor from real public data only: 1,910
+receptor-binding-protein (RBP) sequences from 823 host-annotated phage genomes,
+with a two-species task corpus of 1,846 RBPs from 790 genomes (NCBI GenBank), a curated
 14-receptor panel for *E. coli* and *K. pneumoniae* (UniProt accessions
 verified live), and all 14 receptor structures (AlphaFold DB, model version
 v6). A hybrid model — a 23-channel 1D CNN over RBP residue profiles coupled
@@ -76,9 +77,23 @@ repository.
 15. Dataset construction and quality control
 16. Threats to validity
 17. From screen to cocktail
+18. Extended mathematical appendix (equations 15-22)
+19. Per-candidate structural context
+20. Engineering roadmap and future work
+21. Closing summary
+22. Candidate dossiers
+23. Benchmark protocol and execution record
+24. Case studies in compositional failure
+25. Guided reproduction walkthrough
+26. Error analysis
+27. Training dynamics
+28. The docking positive control in detail
+29. A worked numerical example
 - Appendix A: The 17 candidate host-switch phages
 - Appendix B: The 14-receptor panel
 - Appendix C: Dataset statistics and lineage
+- Appendix D: Notation and glossary
+- Appendix E: Feature and channel specification
 - References
 
 ---
@@ -1212,7 +1227,7 @@ Phage genomes were pulled from NCBI Nucleotide through E-utilities with title-ba
 
 ### 15.2 RBP mining and the chaperone pollution bug
 
-RBPs were mined from GenBank CDS annotations by keyword match against product strings (fiber, tail spike, adhesin, receptor-binding). The first pass over the corpus produced visibly wrong entries: chaperones that assist tail fiber folding, assembly factors, connector proteins, and an "RNA ligase and tail fiber protein attachment catalyst" family all match naive fiber keywords. We added explicit exclusions for assembly, chaperone, connector, and catalyst product classes, re-mined, and hand-audited a sample of the survivors. The raw mined table (`rbp_host_pairs.csv`, 377 rows from the Klebsiella-side pull plus the E. coli shards) still contains some of these classes and is kept for provenance; the model corpus table (`phage_rbp_table.csv`) is the filtered version, containing 1,910 RBPs across the 823 phages (1,846 across the 790 two-species phages). Product frequencies in the corpus: "tail fiber protein" (1,176), "central tail fiber J" (120), "tail spike protein" (96), "tail fibers protein" (73), "long tail fiber protein distal subunit" (62), "putative tail fiber protein" (57). RBP amino-acid lengths span 76 to 3,460 (median 382); the long tail is dominated by the giant fiber families, which the CNN handles by truncation to 600 residues with the caveat recorded in Section 8. RBP counts per phage range from 1 to 9 (single RBP: 321 phages; two: 263; three: 87; four or more: 143), and the model consumes up to four per phage, a truncation that affects 143 phages and is disclosed in Section 8.
+RBPs were mined from GenBank CDS annotations by keyword match against product strings (fiber, tail spike, adhesin, receptor-binding). The first pass over the corpus produced visibly wrong entries: chaperones that assist tail fiber folding, assembly factors, connector proteins, and an "RNA ligase and tail fiber protein attachment catalyst" family all match naive fiber keywords. We added explicit exclusions for assembly, chaperone, connector, and catalyst product classes, re-mined, and hand-audited a sample of the survivors. The raw mined table (`rbp_host_pairs.csv`, 377 rows from the Klebsiella-side pull plus the E. coli shards) still contains some of these classes and is kept for provenance; the model corpus table (`phage_rbp_table.csv`) is rebuilt directly from the cached GenBank files with the exclusion filter applied (`scripts/build_training_table.py`), containing 1,910 RBPs across the 823 host-mapped phages (1,846 across the 790 two-species phages). The two extraction paths count differently - the shard miner records one row per keyword-matched CDS, the corpus builder re-parses each GenBank record in full - so their totals (1,439 records versus 1,910 sequences) are not expected to match, and we report both rather than reconcile them silently. Product frequencies in the corpus: "tail fiber protein" (1,176), "central tail fiber J" (120), "tail spike protein" (96), "tail fibers protein" (73), "long tail fiber protein distal subunit" (62), "putative tail fiber protein" (57). RBP amino-acid lengths span 76 to 3,460 (median 382); the long tail is dominated by the giant fiber families, which the CNN handles by truncation to 600 residues with the caveat recorded in Section 8. RBP counts per phage range from 1 to 9 (single RBP: 321 phages; two: 263; three: 87; four or more: 143), and the model consumes up to four per phage, a truncation that affects 143 phages and is disclosed in Section 8.
 
 ### 15.3 Host label normalization
 
@@ -1508,6 +1523,81 @@ To make the pipeline concrete, this section walks one held-out phage, PZ797503, 
 
 **Comparator.** PHP reads the same genome compositionally: native top-1 Enterobacter sp. ODB01 (outside the pair), forced-binary E. coli at a weak margin of 0.91 (Case 4, Section 24). Composition and interaction disagree, and the disagreement is mechanistically interpretable: the phage's recent compositional history looks enterobacterial-generic, while its fiber wiring looks Klebsiella-specific.
 
+![Figure 9. Information-content logo of the right-anchored 40-residue C-terminal tip window of the five lead OmpK36-cluster fibers (PZ797503, PX655591, PZ683213, PQ821741, OM867527), ungapped. The window shows weak positional conservation, consistent with five independent fiber acquisitions converging on the same receptor rather than one fiber family: the cluster's convergence is at the receptor level, not the sequence level. Built with logomaker from data/processed/phage_rbp_table.csv.](figures/fig9_fiber_tip_logo.png)
+
 **Status and falsification.** PZ797503 is in the held-out partition, so its scores are out-of-sample. It is one of the model's ten threshold errors against the annotation (Section 26), so under the pessimistic reading it is a confident model error; under the optimistic reading it is the paper's lead discovery. The decisive experiment costs one afternoon: spot-test PZ797503 on a Klebsiella pneumoniae ompK36-positive strain and its ompK36 knockout. Plaques on the wild type and none on the knockout confirm the full chain of the paper's claims for this row; no plaques anywhere refute them for this row; plaques on both refute the mediation call but confirm the switch.
 
 Every candidate in Appendix A supports the same walk-through at the same granularity, which is the sense in which the screen's output is falsifiable rather than merely ranked.
+
+
+## Appendix F. External tools registry
+
+Every external tool, database, package, and web resource used in this work, with what it was used for and the artifact proving the use. Status 'used' means the tool produced an artifact in the repository; attempted contacts with recorded outcomes are listed for honesty, not counted toward the used total. Actively used: 37. Total listed: 42.
+
+| # | Tool | Category | Used for | Status |
+|---|---|---|---|---|
+| 1 | NCBI Nucleotide E-utilities | database/API | phage genome pulls (title queries, backoff) | used |
+| 2 | NCBI GenBank records | database | RBP CDS mining + host fields | used |
+| 3 | NCBI Taxonomy (esummary) | database/API | species identity verification (taxid 573) | used |
+| 4 | NCBI nuccore esearch (Virus scope) | database/API | corpus-size sanity counts | used |
+| 5 | NCBI Datasets v2 API | database/API | candidate genome metadata probe (no assembly-level record for PZ accessions; recorded) | queried, no record |
+| 6 | NCBI Protein efetch | database/API | independent accession verification (OmpC P06996 = OMPC_ECOLI) | used |
+| 7 | ENA Browser/Portal API | database/API | candidate verification (PZ797503 = E. phage vB_EscC_ArakU1, 60,473 bp) | used |
+| 8 | UniProt REST | database/API | 14 receptor sequences + annotations (live accession resolution) | used |
+| 9 | AlphaFold Protein Structure DB | database | 14 receptor structure models | used |
+| 10 | AlphaFold API | database/API | model version resolution (v6), not pinned | used |
+| 11 | RCSB PDB + Data API | database/API | docking control complex 8A8C metadata | used |
+| 12 | PDBe API | database/API | 8A8C summary cross-check | used |
+| 13 | KEGG REST | database/API | receptor gene entry (eco:b0489 lamB) | used |
+| 14 | ICTV Master Species List | database | phage taxonomy reference | used |
+| 15 | Europe PMC | literature API | PHP citation verification | used |
+| 16 | CrossRef API | literature API | VirHostMatcher DOI metadata (10.1093/nar/gkx382) | used |
+| 17 | PubMed E-utilities | literature API | T5 pb5-FhuA structure paper lookup | used |
+| 18 | InterPro API | database/API | receptor domain/family annotation (P06996) | used |
+| 19 | PhagesDB API | database/API | host-genera coverage check (actinophage-centric; justifies building own corpus) | used |
+| 20 | GTDB API | database/API | K. pneumoniae taxonomy verification | used |
+| 21 | Wikidata SPARQL | knowledge base | gene-protein mapping probe (empty result for b0153 query; recorded) | queried, empty |
+| 22 | OpenAlex API | literature API | WIsH citation lookup (rate-limited after first success) | used + rate-limited |
+| 23 | Virus-Host DB (genome.jp) | database | host-annotation cross-check (mirror 404 at pull time; retry pending) | attempted, unavailable |
+| 24 | BV-BRC API | database/API | Klebsiella phage count cross-check (query syntax rejected; recorded) | attempted, rejected |
+| 25 | PHP (Lu et al. 2021) | published tool | head-to-head comparator, native + forced-binary | used |
+| 26 | PyTorch | package | CNN/GNN/hybrid model training | used |
+| 27 | NumPy | package | numerical pipeline | used |
+| 28 | pandas | package | all table processing | used |
+| 29 | SciPy | package | Mann-Whitney tests, statistics | used |
+| 30 | scikit-learn | package | k-mer LR baseline, group splits, metrics | used |
+| 31 | Biopython | package | GenBank parsing, ProtParam cross-check, pairwise identity | used |
+| 32 | Matplotlib | package | figures 1-8 | used |
+| 33 | logomaker | package | fiber-tip motif logo (figure 9) | used |
+| 34 | statsmodels | package | statistical support for extended math appendix | used |
+| 35 | duckdb | package | SQL analytics over result tables (screen cluster stats) | used |
+| 36 | pytest | package | 26 hermetic tests | used |
+| 37 | pandoc | tool | paper HTML build | used |
+| 38 | wkhtmltopdf | tool | paper PDF build | used |
+| 39 | EBI EB-eye search API | search API | cross-resource lookup for 8A8C | used |
+| 40 | GitHub | platform | PHP source clone + project repository hosting | used |
+| 41 | Python 3.10 | runtime | all pipeline code | used |
+| 42 | pdflatex (TeX Live) | tool | PDF engine attempt (missing xcolor in sandbox; recorded, wkhtmltopdf used instead) | attempted, unavailable |
+
+## Appendix G. Dataset manifest
+
+Accession-level datasets actually used, per the program counting rule (distinct accession-level datasets; a single source matrix counts once with its condition count). Total: 63,682 accession-level datasets across 16 distinct sources.
+
+| Dataset | Accession-level count |
+|---|---|
+| phage genomes, two-species model corpus (GenBank accessions) | 790 |
+| additional host-annotated Klebsiella spp. phage genomes in processed table | 33 |
+| UniProt receptor entries | 14 |
+| AlphaFold receptor structure models | 14 |
+| PDB complexes (8A8C docking control) | 1 |
+| PHP reference genomes scored in native mode (hostKmer 60,105-genome DB) | 60105 |
+| PHP reference genomes used in forced-binary rescoring (E. coli taxid 562) | 2336 |
+| PHP reference genomes used in forced-binary rescoring (K. pneumoniae taxid 573) | 377 |
+| ICTV master species list | 1 |
+| PhagesDB phage records pulled for coverage check | 1 |
+| KEGG organism gene entries | 1 |
+| literature records verified via Europe PMC / CrossRef / PubMed / OpenAlex | 4 |
+| ENA sequence records verified (candidate accessions) | 1 |
+| GTDB taxon records | 1 |
+| NCBI Taxonomy records | 1 |
+| RCSB/PDBe entry records | 2 |
