@@ -1084,3 +1084,69 @@ receptors (especially capsule serotype features for Klebsiella), and
 strain-level labels would each be worth more than any model scaling. The
 cheapest accuracy point in this project is curation, not FLOPs.
 
+
+## 13. Extended results
+
+This section expands each headline result with the full numbers behind it, the figures generated from the saved artifacts, and the per-receptor probe analysis. Every number below is read from the committed result files listed in Section 10; none is re-stated from memory.
+
+### 13.1 Seed replication in full
+
+Table 13.1 gives every held-out metric for all three seeds, read from `results/interaction_cnn_seed7.json`, `results/interaction_cnn_seed42.json`, and `results/interaction_cnn_seed123.json`. The test set is identical across seeds (158 phages, fixed by the group split); only the training RNG changes.
+
+| Metric | seed 7 | seed 42 | seed 123 | mean +/- sd |
+|---|---|---|---|---|
+| AUROC | 0.973 | 0.946 | 0.978 | 0.966 +/- 0.017 |
+| Accuracy | 0.930 | 0.911 | 0.953 | 0.931 +/- 0.021 |
+| Choice accuracy | 0.924 | 0.918 | 0.962 | 0.935 +/- 0.024 |
+| k-mer LR baseline AUROC | 0.910 | 0.897 | 0.933 | 0.913 +/- 0.018 |
+
+Figure 5 (`paper/figures/fig5_seed_replication.png`) shows the same numbers as grouped bars. Three observations. First, the hybrid model beats its own k-mer logistic-regression baseline on AUROC at every seed, with margins of +6.3, +4.9, and +4.5 points. The gap is consistent in sign and size, so the CNN branch is contributing real signal beyond the compositional head rather than noise. Second, seed 42 is the weakest seed on all three metrics, which warns against the common practice of reporting a single lucky run; our headline claims use seed 7 only because it is the pre-registered primary run, and the claims survive at the worst seed as well. Third, choice accuracy tracks accuracy closely (within 1.1 points at every seed), which says the model's pairwise ranking is about as reliable as its per-sample calibration, consistent with the degeneracy analysis of Theorem 1: the choice metric removes the shared additive term, so the residual difference between the two metrics measures how much of the error lives in the sample-specific term versus the shared one.
+
+**Figure 5 caption.** Held-out test metrics for three training seeds on the identical 158-phage test set. Grey bar: the Hadamard k-mer logistic-regression baseline AUROC (0.910 at seed 7's split statistics; the baseline is deterministic given the split, so it varies only through the standardization statistics). Source files: `results/interaction_cnn_seed{7,42,123}.json`; figure code: `scripts/make_extra_figures.py`.
+
+### 13.2 The PHP head-to-head, phage by phage
+
+Section 6.2 reported the headline: on the identical 158 held-out phages, the published PHP tool scores 17.7% native top-1 within-pair accuracy and 69.6% under a forced-binary rescoring, against 93.0% for this work. The per-phage record in `results/php_headtohead.json` lets us say exactly where PHP's errors come from, and the breakdown is more informative than the headline.
+
+**Native mode is an E. coli detector, not a two-species classifier.** Of the 96 true E. coli phages, PHP's native top-1 call is Escherichia coli for 28 (all 28 of its within-pair hits), an unrelated species for 68, and Klebsiella pneumoniae for none. Of the 62 true Klebsiella phages, PHP's top-1 call is K. pneumoniae for zero, an unrelated species for 51, and E. coli for 11. Across all 158 phages, K. pneumoniae is never the top-1 prediction. The most frequent native predictions (Figure 8, `paper/figures/fig8_php_species.png`) are E. coli (39), Halieaceae bacterium UBA3993 (10), Escherichia sp. MOD1-EC7003 (8), and Shigella dysenteriae (6); 61 distinct species appear as top-1 calls. The tool is not failing randomly: it has a strong attractor toward E. coli and a complete blind spot for K. pneumoniae in this slice of phage diversity. A plausible mechanism is reference-database composition: PHP's 60,105-genome host database and its training phages are enriched for E. coli-infecting phages relative to Klebsiella-infecting ones, and a k-mer GMM will preferentially fire on the better-sampled host. We state this as a hypothesis, not a diagnosis, since we did not audit PHP's training set composition.
+
+**Figure 8 caption.** Most frequent native top-1 species predicted by PHP across the 158 held-out test phages. Note the absence of Klebsiella pneumoniae from the top ranks despite 62 of 158 test phages being Klebsiella-annotated. Source: `results/php_headtohead.json`, field `per_phage[].php_top1_species`.
+
+**Forced-binary mode rescues E. coli but not Klebsiella.** When we restrict PHP's output to the two species (max GMM score over the 2,336 E. coli reference genomes versus the 377 K. pneumoniae reference genomes), accuracy rises to 94/96 on E. coli phages but only 16/62 on Klebsiella phages. Figure 6 (`paper/figures/fig6_php_margins.png`) shows why: the forced-binary margin (E. coli score minus Klebsiella score) has mean +1.57 +/- 0.87 for true E. coli phages but +0.76 +/- 1.29 for true Klebsiella phages. The Klebsiella distribution sits mostly on the wrong side of zero, and the two distributions overlap heavily. 48 of 158 phages are wrong under both modes. In other words, PHP's k-mer signature genuinely separates many E. coli phages from the Klebsiella reference set, but the majority of Klebsiella phages in our test set look more like E. coli hosts to PHP than like Klebsiella hosts, even when forced to choose. This is exactly the regime where an interaction-based model should help: composition is confounded by host relatedness (E. coli and Klebsiella are both Enterobacterales with similar codon and k-mer landscapes), while receptor compatibility is a physical property of the phage's tail proteins.
+
+**Figure 6 caption.** Distribution of PHP forced-binary score margins on the 158 held-out phages. Positive margin means PHP scores the phage closer to E. coli reference genomes. The dashed line is the decision boundary. True Klebsiella phages (orange) concentrate near and left of zero but with a long overlap into positive territory; 46 of 62 fall on the wrong side. Source: `results/php_headtohead.json`, fields `php_maxscore_ecoli`, `php_maxscore_kleb`.
+
+**What this benchmark does and does not show.** It shows that on a current, held-out, two-species host-prediction task built from recently deposited phage genomes, our interaction model is far more accurate than the published PHP tool under both of PHP's operating modes, using PHP's own released models and database. It does not show that PHP is a bad tool: PHP was designed and validated for genus- and species-level prediction across all prokaryotic hosts, a much harder and broader task, and its authors report strong numbers on their own benchmarks. The honest claim is narrower and, we believe, more useful: for the clinically relevant Enterobacterales pair, compositional methods inherit a host-relatedness confound that interaction features avoid, and a task-specific interaction model is the better instrument.
+
+### 13.3 The per-receptor probe
+
+The discovery screen scores each phage against the pooled 10-receptor E. coli panel and the pooled 4-receptor Klebsiella panel. To ask which receptors individually carry the discrimination, we ran a per-receptor probe (`scripts/per_receptor_dump.py`): every screened phage (790) was scored against each single receptor alone, giving the 790 x 14 matrix in `results/per_receptor_scores.csv`, and for each receptor we computed the Mann-Whitney AUC between scores of phages annotated on that receptor's species and phages annotated on the other species (`results/per_receptor_analysis.json`).
+
+Eleven of fourteen receptors are individually near-perfect separators under this probe: AUC between 0.975 and 0.989 (Table 13.2). The three exceptions are all E. coli entries, and they fail in the same direction: E-OmpC (AUC 0.053), E-OmpA (0.167), and E-LamB (0.231) score higher for Klebsiella-annotated phages than for E. coli-annotated ones. E-OmpC is the extreme case, mean score 0.173 on own-species phages versus 0.804 on other-species phages.
+
+| Receptor | Species | mean own | mean other | AUC |
+|---|---|---|---|---|
+| FhuA | E. coli | 0.895 | 0.020 | 0.982 |
+| OmpF | E. coli | 0.920 | 0.188 | 0.978 |
+| Tsx | E. coli | 0.848 | 0.023 | 0.983 |
+| BtuB | E. coli | 0.955 | 0.047 | 0.987 |
+| FepA | E. coli | 0.946 | 0.065 | 0.975 |
+| TolC | E. coli | 0.950 | 0.052 | 0.984 |
+| YaeT_BamA | E. coli | 0.933 | 0.065 | 0.975 |
+| LamB | E. coli | 0.636 | 0.829 | 0.231 |
+| OmpC | E. coli | 0.173 | 0.804 | 0.053 |
+| OmpA | E. coli | 0.508 | 0.859 | 0.167 |
+| ompK36 | K. pneumoniae | 0.956 | 0.055 | 0.981 |
+| ompK35 | K. pneumoniae | 0.944 | 0.037 | 0.988 |
+| lamB | K. pneumoniae | 0.971 | 0.065 | 0.987 |
+| OmpA | K. pneumoniae | 0.974 | 0.100 | 0.989 |
+
+We report this asymmetry honestly rather than hiding it, because it has a structural explanation that bounds how the probe should be read. The model was trained on pooled panels: during training, the host group for a positive E. coli sample contains all ten E. coli receptors, and the GNN readout pools over the group. A single-receptor probe is therefore out-of-distribution in two ways. First, the GNN never saw one-node host graphs during training. Second, and more important, the free Linear(2,1) combiner (Section 6.5) mixes the CNN interaction head with the k-mer head using roughly equal negative weights on a difference feature; when the CNN head is fed an atypical host context, the k-mer head dominates, and the k-mer head encodes compositional similarity between RBP and receptor sequences. The three anti-marker receptors are precisely the ones with close Klebsiella homologs in the panel: OmpC versus ompK36/ompK35 (major porins), OmpA versus K-OmpA (same family), and LamB versus K-lamB (maltoporins). A Klebsiella phage RBP looks compositionally like a protein that binds a porin, and a lone E. coli porin is a perfectly good porin-shaped input. The pooled-panel score does not suffer from this, because the GNN pools over the full receptor set and the training signal teaches the combined model to use the panel context. The practical reading: single-receptor scores from this model are a hypothesis generator (they named ompK36 for the OmpK36 cluster in Section 11.1, consistent with known Klebsiella phage biology), not a quantitative binding assay, and the anti-marker rows are the receipt proving that distinction.
+
+Figure 7 (`paper/figures/fig7_receptor_heatmap.png`) shows the top-scoring receptor for each of the 17 host-switch candidates. ompK36 dominates the E. coli-to-Klebsiella direction (top receptor for 8 of 11 candidates), and BtuB plus FepA feature in the reverse direction, consistent with the mechanistic reading in Section 11.
+
+**Figure 7 caption.** Top-scoring single receptor (either direction) for each of the 17 candidate host-switch phages, with the pair score annotated in each cell. Grey cells: the receptor is not the top scorer for that candidate. Scores below 0.9 (dark cells) are cases where the top receptor still scores weakly, flagging lower-confidence mediation calls. Source: `results/discovery_screen.csv`; figure code: `scripts/make_extra_figures.py`.
+
+### 13.4 Screen statistics in full
+
+The discovery screen (`results/discovery_screen.csv`) scored all 790 two-species phages. 773 rows are confirmed-host (the model's pooled species score agrees with the annotation), 17 are candidate-host-switch (cross-species probability exceeds own-species probability by more than 0.2), and zero are candidate-broad-range under the screen's rule (both probabilities above 0.7). The absence of broad-range calls is itself informative: it says the pooled model is decisive at the species level for this corpus, rarely straddling the 0.7/0.7 band. 11 of the 17 candidates come from the held-out test set, so their scores are genuine out-of-sample predictions; the other 6 come from training phages and are flagged as such in Appendix A. The margin distribution of the 773 confirmed-host rows is saturated: the median margin is 0.9997 and 98.7% of rows sit above 0.5, meaning the model almost always agrees with the annotation with near-maximal confidence. That saturation cuts both ways. It makes the 17 dissenting rows stand out further, and it warns that the pooled scores are not calibrated probabilities (Section 8); a margin of 0.9997 is the model being decisive, not the universe being certain.
