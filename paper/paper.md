@@ -398,6 +398,8 @@ quantify how much of the final score is sequence-local versus compositional.
 Objective: binary cross-entropy (Eq. 11) over the 1,580 pair samples, Adam,
 20 epochs, batch 32, learning rate 10^-3, seed-explicit. All metrics are
 computed on the held-out splits only. The full training curve is Figure 1.
+
+![Figure 1. Training and validation AUROC across epochs for the hybrid model (seed 7). Validation metrics are computed on held-out groups only. Source: results/interaction_cnn_seed7.json history field; figure code: scripts/make_figures.py.](figures/fig1_training.png)
 Three seeds (7, 42, 123) replicate the run end to end; per-seed artifacts
 (metrics JSON, model weights, run logs) are committed.
 
@@ -665,7 +667,11 @@ corpus trained 90 seconds per run on 2 CPU cores. The validation curves
 holds flat while the training loss continues down — mild memorization, no
 metric degradation, consistent with the early-stopping-free protocol we ran.
 
-Figure 2 shows the held-out ROC (seed 7). Figure 4 shows the interaction
+Figure 2 shows the held-out ROC (seed 7).
+
+![Figure 2. Held-out ROC curve, seed 7 (AUROC 0.973, n=158 phages). Source: results/interaction_cnn_seed7.json.](figures/fig2_roc.png) Figure 4 shows the interaction
+
+![Figure 4. Distribution of interaction logits for held-out positives vs negatives, seed 7. Source: results/interaction_cnn_seed7.json.](figures/fig4_logits.png)
 logit distributions for true-host versus alternative-host pairs on the test
 split: the two histograms are separated by roughly 15 logits of margin, with
 a small overlap band around zero that contains essentially all of the
@@ -729,6 +735,8 @@ identical test phages. The full per-phage breakdown is
 Running the trained model over all 790 phages and flagging those whose
 predicted host panel disagrees with the GenBank annotation at high
 confidence yields 17 candidates (Figure 3), 11 of them in the held-out test
+
+![Figure 3. Discovery screen scatter: pooled E. coli vs Klebsiella scores for all 790 screened phages. Orange points are the 17 candidate host-switch rows. Source: results/discovery_screen.csv.](figures/fig3_screen.png)
 split (so their annotations were never trained on). Each call comes with a
 named predicted receptor. Highlights; the full 17-row table is Appendix A:
 
@@ -1098,6 +1106,8 @@ This section expands each headline result with the full numbers behind it, the f
 
 ### 13.1 Seed replication in full
 
+![Figure 5. Held-out metrics for three seeds on the identical 158-phage test set; grey bar is the k-mer LR baseline AUROC. Source: results/interaction_cnn_seed{7,42,123}.json.](figures/fig5_seed_replication.png)
+
 Table 13.1 gives every held-out metric for all three seeds, read from `results/interaction_cnn_seed7.json`, `results/interaction_cnn_seed42.json`, and `results/interaction_cnn_seed123.json`. The test set is identical across seeds (158 phages, fixed by the group split); only the training RNG changes.
 
 | Metric | seed 7 | seed 42 | seed 123 | mean +/- sd |
@@ -1113,6 +1123,10 @@ Figure 5 (`paper/figures/fig5_seed_replication.png`) shows the same numbers as g
 
 ### 13.2 The PHP head-to-head, phage by phage
 
+![Figure 6. PHP forced-binary score margins on the 158 held-out phages; the dashed line is the decision boundary. Source: results/php_headtohead.json.](figures/fig6_php_margins.png)
+
+![Figure 8. PHP native top-1 predictions: most frequently predicted species across the 158 test phages. K. pneumoniae never appears. Source: results/php_headtohead.json.](figures/fig8_php_species.png)
+
 Section 6.2 reported the headline: on the identical 158 held-out phages, the published PHP tool scores 17.7% native top-1 within-pair accuracy and 69.6% under a forced-binary rescoring, against 93.0% for this work. The per-phage record in `results/php_headtohead.json` lets us say exactly where PHP's errors come from, and the breakdown is more informative than the headline.
 
 **Native mode is an E. coli detector, not a two-species classifier.** Of the 96 true E. coli phages, PHP's native top-1 call is Escherichia coli for 28 (all 28 of its within-pair hits), an unrelated species for 68, and Klebsiella pneumoniae for none. Of the 62 true Klebsiella phages, PHP's top-1 call is K. pneumoniae for zero, an unrelated species for 51, and E. coli for 11. Across all 158 phages, K. pneumoniae is never the top-1 prediction. The most frequent native predictions (Figure 8, `paper/figures/fig8_php_species.png`) are E. coli (39), Halieaceae bacterium UBA3993 (10), Escherichia sp. MOD1-EC7003 (8), and Shigella dysenteriae (6); 61 distinct species appear as top-1 calls. The tool is not failing randomly: it has a strong attractor toward E. coli and a complete blind spot for K. pneumoniae in this slice of phage diversity. A plausible mechanism is reference-database composition: PHP's 60,105-genome host database and its training phages are enriched for E. coli-infecting phages relative to Klebsiella-infecting ones, and a k-mer GMM will preferentially fire on the better-sampled host. We state this as a hypothesis, not a diagnosis, since we did not audit PHP's training set composition.
@@ -1126,6 +1140,8 @@ Section 6.2 reported the headline: on the identical 158 held-out phages, the pub
 **What this benchmark does and does not show.** It shows that on a current, held-out, two-species host-prediction task built from recently deposited phage genomes, our interaction model is far more accurate than the published PHP tool under both of PHP's operating modes, using PHP's own released models and database. It does not show that PHP is a bad tool: PHP was designed and validated for genus- and species-level prediction across all prokaryotic hosts, a much harder and broader task, and its authors report strong numbers on their own benchmarks. The honest claim is narrower and, we believe, more useful: for the clinically relevant Enterobacterales pair, compositional methods inherit a host-relatedness confound that interaction features avoid, and a task-specific interaction model is the better instrument.
 
 ### 13.3 The per-receptor probe
+
+![Figure 7. Top-scoring receptor per candidate host-switch phage with pair scores annotated; grey cells are non-top receptors. Source: results/discovery_screen.csv.](figures/fig7_receptor_heatmap.png)
 
 The discovery screen scores each phage against the pooled 10-receptor E. coli panel and the pooled 4-receptor Klebsiella panel. To ask which receptors individually carry the discrimination, we ran a per-receptor probe (`scripts/per_receptor_dump.py`): every screened phage (790) was scored against each single receptor alone, giving the 790 x 14 matrix in `results/per_receptor_scores.csv`, and for each receptor we computed the Mann-Whitney AUC between scores of phages annotated on that receptor's species and phages annotated on the other species (`results/per_receptor_analysis.json`).
 
@@ -1337,3 +1353,69 @@ The gaps between this pipeline and a production screening tool, in priority orde
 ## 21. Closing summary
 
 This project set out to do three things: beat a published tool on its own terms, name falsifiable discoveries, and ship a tool that does something no existing tool does. The delivered artifacts, stated at honest strength: a hybrid CNN+GNN interaction model at 0.973 AUROC and 93.0% accuracy on 158 held-out phages (three-seed replicated, group-split, beating its own k-mer baseline at every seed); a head-to-head in which the published PHP tool, run with its own models and database on the identical phages, scores 17.7% native and 69.6% forced-binary; a screen that names 17 accession-level host-switch candidates with probabilities, directions, receptor hypotheses, and held-out flags, 11 of them out-of-sample; a per-receptor probe that maps which of 14 receptors carry the species signal and which three are anti-markers; and a paper that carries its own failure map, including a failed docking control, an out-of-distribution probe caveat, and a ranked threats-to-validity list. The numbers, figures, candidates, and caveats all trace to committed artifacts, and every claim in this paper can be re-derived from them.
+
+## 22. Candidate dossiers
+
+Appendix A gives the 17 candidates as a table. This section gives each candidate a short dossier with its exact screen numbers, so that a lab picking rows to test gets the full evidence per row rather than a table cell. All values are from `results/discovery_screen.csv`; "held-out" means the phage was in the 158-phage test partition, so its scores are out-of-sample predictions. Margin is own-species probability minus other-species probability, so a large negative margin is a strong switch call.
+
+### 22.1 The strongest switch calls (margin below -0.95)
+
+**PZ324409** (annotated E. coli, training partition). p_ecoli 0.0000, p_klebsiella 1.0000, margin -1.0000, the maximum possible dissent. Top receptors: K-lamB at 1.000; on the E. coli side the best panel member is OmpC at 0.973, one of the three anti-marker receptors, so the E. coli-side annotation deserves particular suspicion. This row is the paper's single strongest candidate, and its LamB-to-lamB reading is the most mechanistically conservative: a maltoporin-tropic phage whose annotation may simply be wrong. Because it sits in the training partition, its score is not out-of-sample; the model agreed with its own training signal on this row, so the falsification value is high but the evidentiary status differs from the held-out rows.
+
+**OR090992** (annotated K. pneumoniae, training). p_ecoli 0.9998, p_klebsiella 0.0001, margin -0.9998. Top receptors: E-BtuB at 1.000 against K-OmpA at 0.078. The strongest reverse-direction call: a Klebsiella-annotated phage the model reads as an almost certain E. coli phage mediated by the BtuB transporter. Same training-partition caveat as PZ324409.
+
+**PZ797503** (annotated E. coli, held out). p_ecoli 0.0009, p_klebsiella 0.9994, margin -0.9985. Top receptors: ompK36 at 1.000; E-side best OmpC 0.992 (anti-marker, expected to read high for Klebsiella-like fibers). The strongest held-out candidate and the head of the OmpK36 cluster. A plaque assay of PZ797503 on an ompK36-positive Klebsiella panel is the cheapest decisive experiment this paper proposes.
+
+**PX655591** (annotated E. coli, held out). p_ecoli 0.0006, p_klebsiella 0.9979, margin -0.9973. Top receptors: ompK36 0.999; E-side best OmpA 0.921 (also an anti-marker). Second member of the held-out OmpK36 cluster.
+
+**PZ683213** (annotated E. coli, held out). p_ecoli 0.0011, p_klebsiella 0.9982, margin -0.9971. ompK36 1.000; E-side OmpC 0.977 (anti-marker). Third held-out OmpK36 member.
+
+**PZ278545** (annotated K. pneumoniae, held out). p_ecoli 0.9968, p_klebsiella 0.0014, margin -0.9955. Top receptors: E-TolC 1.000 against K-OmpA 0.004. The strongest held-out reverse-direction call, TolC-mediated. TolC is a channel-tunnel with a conserved beta-barrel domain and is the receptor of several well-studied E. coli phages; a TolC-tropic reading is specific and testable with a tolC knockout.
+
+**PQ821741** (annotated E. coli, held out). p_ecoli 0.0082, p_klebsiella 0.9881, margin -0.9799. ompK36 1.000; E-side TolC 0.976. Fourth held-out OmpK36 member.
+
+**PV833093** (annotated K. pneumoniae, held out). p_ecoli 0.9819, p_klebsiella 0.0053, margin -0.9766. E-BtuB 1.000 against K-OmpA 0.218. Second held-out reverse call, BtuB-mediated, pairing naturally with OR090992.
+
+**OM867527** (annotated E. coli, held out). p_ecoli 0.0295, p_klebsiella 0.9983, margin -0.9688. ompK36 1.000; E-side LamB 0.962 (anti-marker). Fifth held-out OmpK36 member.
+
+### 22.2 Strong calls with one notable caveat each (margin -0.95 to -0.5)
+
+**PZ465523** (annotated E. coli, held out). p_ecoli 0.0164, p_klebsiella 0.9298, margin -0.9134. Unusually, its top Klebsiella receptor is K-OmpA at 0.998 rather than ompK36, making it the held-out cluster's designated diversity member: if the OmpK36 cluster tests positive, PZ465523 is the natural second-receptor arm of a cocktail. Its E-side best is YaeT_BamA 0.974.
+
+**PZ103647** (annotated K. pneumoniae, training). p_ecoli 0.9489, p_klebsiella 0.1265, margin -0.8223. E-side YaeT_BamA 1.000. A reverse call on a less canonical receptor; BamA is essential and surface-exposed but a rarer phage receptor, so this row is interesting precisely because it would be surprising.
+
+**PQ478073** (annotated E. coli, training). p_ecoli 0.3538, p_klebsiella 0.9386, margin -0.5848. K-lamB 0.999; E-side YaeT_BamA 0.999. The second LamB cross-tropism candidate after PZ324409; its nonzero E. coli score keeps a dual-tropism reading alive, which a plaque panel would resolve.
+
+**PX705375** (annotated E. coli, training). p_ecoli 0.5546, p_klebsiella 0.9913, margin -0.4368. ompK36 1.000 on the Klebsiella side, but the E. coli score is also moderately high (0.55), so this row sits at the boundary between switch and broad-range. It is the OmpK36 cluster's most plausible dual-host member.
+
+### 22.3 The lower-confidence tail (margin above -0.5)
+
+**PZ917099** (annotated E. coli, held out). p_ecoli 0.5957, p_klebsiella 0.9849, margin -0.3891. Top Klebsiella receptor ompK35 1.000, the second porin. Like PX705375, the elevated E. coli score admits a broad-range reading. Held-out status keeps it in the primary test set.
+
+**PQ621121** (annotated K. pneumoniae, held out). p_ecoli 0.4749, p_klebsiella 0.1624, margin -0.3125. E-BtuB 0.940 against ompK35 0.854. The weakest held-out reverse call: both panels score moderately, so this row is closer to unresolved than to switched, and we present it as a weak candidate rather than a claim.
+
+**PV467748** (annotated E. coli, training). p_ecoli 0.3575, p_klebsiella 0.6497, margin -0.2922. ompK35 0.927; E-side FepA 0.999. The weakest Klebsiella-direction call; its Klebsiella score of 0.65 is far below the cluster's, and it is the row we would drop first under a stricter threshold.
+
+**PX502238** (annotated K. pneumoniae, held out). p_ecoli 0.5424, p_klebsiella 0.3284, margin -0.2140. E-Tsx 0.998; K-OmpA 0.996. Both directions near coin-flip with strong individual receptor scores; the least decisive row in the set, included because the screen's stated threshold (other exceeds own by 0.2) is pre-registered and this row meets it.
+
+### 22.4 How to read the dossiers as a batch
+
+Five held-out candidates name ompK36 with near-unit scores and margins below -0.95; that cluster is the paper's primary falsifiable payload. Two reverse-direction calls (PZ278545, PV833093) name TolC and BtuB with comparably extreme margins and are the secondary payload. The remaining rows are graded honestly: broad-range-ambiguous (PX705375, PZ917099), weak (PQ621121, PV467748, PX502238), or training-partition-only (PZ324409, OR090992, PZ103647, PQ478073, PX705375, PV467748). A lab with capacity for five assays should test PZ797503, PX655591, PZ683213, PZ278545, and PV833093 first; a lab with capacity for one should test PZ797503.
+
+## 23. Benchmark protocol and execution record
+
+This section records the benchmark as executed, so the numbers in Sections 6 and 13 can be re-run or audited without reconstructing decisions from prose.
+
+**Corpus.** 790 phages (431 E. coli-annotated, 359 K. pneumoniae-annotated), 1,846 RBPs, 14 receptors (10 E. coli, 4 K. pneumoniae). Task: 1,580 labeled pairs (each phage against both species panels), group-split by phage accession into 632 train / 158 test.
+
+**Model.** 185,797 parameters total (state dict of `results/interaction_cnn_seed7.pt`). Two ProteinCNNEncoder towers (23 input channels, hidden width 48, embedding 64), a message-passing GNN over host receptor graphs with sum readout, a Hadamard+difference k-mer head (k=2 spectra), and a free Linear(2,1) combiner with learned weights (-0.561, -0.500) and bias (-0.423) at seed 7.
+
+**Training.** 20 epochs per seed, wall-clock 90-95 seconds per seed on the sandbox CPU (runtimes from the result JSONs: 90s, 90s, 95s for seeds 7, 42, 123). Seeds 7, 42, 123 with identical splits; only RNG differs.
+
+**Held-out metrics (all from result JSONs).** Seed 7: AUROC 0.973, AUPRC 0.974, accuracy 0.930, choice 0.924. Seed 42: AUROC 0.946, AUPRC 0.912, accuracy 0.911, choice 0.918. Seed 123: AUROC 0.978, AUPRC 0.981, accuracy 0.953, choice 0.962. Baseline (Hadamard k-mer logistic regression, same splits): AUROC 0.910, 0.897, 0.933 across the three seeds' standardization statistics.
+
+**PHP head-to-head.** PHP (congyulu-bioinfo/PHP, run from `external/php/`) with its shipped GMM models and 60,105-genome hostKmer database, k=4. One pandas-2 compatibility patch (`._stat_axis` to `index`) was required to run the published code under the current pandas; no model, weight, or database content was modified. The 158 test phages were exported once to `external/test_genomes.labels.csv` and scored through PHP's native pipeline (`external/php/out/hostKmer_60105_kmer4_Prediction_Maxhost.tsv`) and through the forced-binary rescoring described in Section 6.2. The sklearn pickle version warning (models serialized under 0.22, loaded under 1.7.2) is recorded in `results/php_headtohead.json` caveats; PHP's own log (`external/php/php_run.log`) shows all 158 phages completed.
+
+**Test discipline.** The 26-test hermetic suite (`tests/`) runs without network and covers feature dimensions, model shapes, GNN permutation invariance, dataset grouping invariants, and screen thresholds. Live-network steps (NCBI pulls, UniProt/AlphaFold resolution, PHP download) are scripts, not tests, and each records its outputs under `data/` or `external/` with the lineage in Appendix C.
+
+**Artifact index.** Every number in this paper traces to: `results/interaction_cnn_seed{7,42,123}.json/.pt` (benchmark), `results/php_headtohead.json` (head-to-head), `results/discovery_screen.csv` (screen), `results/per_receptor_scores.csv` and `results/per_receptor_analysis.json` (probe), `results/docking_positive_control.json` (docking control), `data/processed/*.csv` (corpus and panel), `external/php/` (comparator assets), `paper/figures/fig1-fig8` (figures, each captioned with its source file).
