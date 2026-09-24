@@ -1,0 +1,1267 @@
+{
+  "parameters": {
+    "p_min": 0.9,
+    "k_redundancy": 3,
+    "auc_min": 0.9,
+    "mu_grid": [
+      1e-07,
+      1e-06,
+      1e-05
+    ],
+    "eps_grid": [
+      0.05,
+      0.1,
+      0.2
+    ],
+    "generations": 20,
+    "population": 100000000.0
+  },
+  "species": {
+    "ecoli": {
+      "cocktail_id": "PD8-EC1",
+      "strain_panel": "Escherichia coli K-12 MG1655 (WT) and single-knockout panel",
+      "leg_a_argmax_design": {
+        "pool_size": 411,
+        "k_redundancy": 3,
+        "validated_receptors": [
+          "FhuA",
+          "OmpF",
+          "Tsx",
+          "BtuB",
+          "FepA",
+          "TolC",
+          "YaeT_BamA"
+        ],
+        "excluded_receptors_low_auc": [
+          "LamB",
+          "OmpC",
+          "OmpA"
+        ],
+        "infeasible_receptors": [
+          "OmpF"
+        ],
+        "targeted_receptors": [
+          "FhuA",
+          "Tsx",
+          "BtuB",
+          "FepA",
+          "TolC",
+          "YaeT_BamA"
+        ],
+        "depth": {
+          "FhuA": 3,
+          "OmpF": 0,
+          "Tsx": 3,
+          "BtuB": 3,
+          "FepA": 3,
+          "TolC": 3,
+          "YaeT_BamA": 3
+        },
+        "members": [
+          {
+            "accession": "PZ334583",
+            "phage_name": "Escherichia phage EcoStrike",
+            "annotated_host": "Escherichia coli",
+            "discovery_candidate": false,
+            "p_species": 1.0,
+            "argmax_receptor": "FhuA",
+            "argmax_score": 1.0,
+            "rank_score": 1.0,
+            "in_heldout_test": false,
+            "member_id": "PD8-EC1.1",
+            "receptor_support": [
+              "FhuA"
+            ],
+            "support_size": 1
+          },
+          {
+            "accession": "PZ445445",
+            "phage_name": "Escherichia phage RudolfGeigy",
+            "annotated_host": "Escherichia coli",
+            "discovery_candidate": false,
+            "p_species": 1.0,
+            "argmax_receptor": "FhuA",
+            "argmax_score": 1.0,
+            "rank_score": 1.0,
+            "in_heldout_test": false,
+            "member_id": "PD8-EC1.2",
+            "receptor_support": [
+              "FhuA"
+            ],
+            "support_size": 1
+          },
+          {
+            "accession": "PZ445447",
+            "phage_name": "Escherichia phage MaxBurger",
+            "annotated_host": "Escherichia coli",
+            "discovery_candidate": false,
+            "p_species": 1.0,
+            "argmax_receptor": "FhuA",
+            "argmax_score": 1.0,
+            "rank_score": 1.0,
+            "in_heldout_test": false,
+            "member_id": "PD8-EC1.3",
+            "receptor_support": [
+              "FhuA"
+            ],
+            "support_size": 1
+          },
+          {
+            "accession": "PX516694",
+            "phage_name": "Escherichia phage OLB156",
+            "annotated_host": "Escherichia coli",
+            "discovery_candidate": false,
+            "p_species": 1.0,
+            "argmax_receptor": "Tsx",
+            "argmax_score": 1.0,
+            "rank_score": 1.0,
+            "in_heldout_test": false,
+            "member_id": "PD8-EC1.4",
+            "receptor_support": [
+              "Tsx"
+            ],
+            "support_size": 1
+          },
+          {
+            "accession": "PZ053912",
+            "phage_name": "Escherichia phage phiM",
+            "annotated_host": "Escherichia coli",
+            "discovery_candidate": false,
+            "p_species": 1.0,
+            "argmax_receptor": "Tsx",
+            "argmax_score": 1.0,
+            "rank_score": 1.0,
+            "in_heldout_test": false,
+            "member_id": "PD8-EC1.5",
+            "receptor_support": [
+              "Tsx"
+            ],
+            "support_size": 1
+          },
+          {
+            "accession": "PZ445532",
+            "phage_name": "Escherichia phage KCP_045",
+            "annotated_host": "Escherichia coli",
+            "discovery_candidate": false,
+            "p_species": 1.0,
+            "argmax_receptor": "Tsx",
+            "argmax_score": 1.0,
+            "rank_score": 1.0,
+            "in_heldout_test": false,
+            "member_id": "PD8-EC1.6",
+            "receptor_support": [
+              "Tsx"
+            ],
+            "support_size": 1
+          },
+          {
+            "accession": "PX930192",
+            "phage_name": "Escherichia phage Doce",
+            "annotated_host": "Escherichia coli",
+            "discovery_candidate": false,
+            "p_species": 1.0,
+            "argmax_receptor": "BtuB",
+            "argmax_score": 1.0,
+            "rank_score": 1.0,
+            "in_heldout_test": false,
+            "member_id": "PD8-EC1.7",
+            "receptor_support": [
+              "BtuB"
+            ],
+            "support_size": 1
+          },
+          {
+            "accession": "PZ386975",
+            "phage_name": "Escherichia phage Mpec4",
+            "annotated_host": "Escherichia coli",
+            "discovery_candidate": false,
+            "p_species": 1.0,
+            "argmax_receptor": "BtuB",
+            "argmax_score": 1.0,
+            "rank_score": 1.0,
+            "in_heldout_test": false,
+            "member_id": "PD8-EC1.8",
+            "receptor_support": [
+              "BtuB"
+            ],
+            "support_size": 1
+          },
+          {
+            "accession": "OR090992",
+            "phage_name": "Klebsiella phage C2",
+            "annotated_host": "Klebsiella pneumoniae",
+            "discovery_candidate": true,
+            "p_species": 0.9998,
+            "argmax_receptor": "BtuB",
+            "argmax_score": 1.0,
+            "rank_score": 0.9998,
+            "in_heldout_test": false,
+            "member_id": "PD8-EC1.9",
+            "receptor_support": [
+              "BtuB"
+            ],
+            "support_size": 1
+          },
+          {
+            "accession": "NC_101820",
+            "phage_name": "Escherichia phage ityhuna",
+            "annotated_host": "Escherichia coli",
+            "discovery_candidate": false,
+            "p_species": 1.0,
+            "argmax_receptor": "FepA",
+            "argmax_score": 1.0,
+            "rank_score": 1.0,
+            "in_heldout_test": false,
+            "member_id": "PD8-EC1.10",
+            "receptor_support": [
+              "FepA"
+            ],
+            "support_size": 1
+          },
+          {
+            "accession": "PX930851",
+            "phage_name": "Escherichia phage vB_Eco_EFF11A",
+            "annotated_host": "Escherichia coli",
+            "discovery_candidate": false,
+            "p_species": 1.0,
+            "argmax_receptor": "FepA",
+            "argmax_score": 1.0,
+            "rank_score": 1.0,
+            "in_heldout_test": false,
+            "member_id": "PD8-EC1.11",
+            "receptor_support": [
+              "FepA"
+            ],
+            "support_size": 1
+          },
+          {
+            "accession": "PX842581",
+            "phage_name": "Escherichia phage SF-E5",
+            "annotated_host": "Escherichia coli",
+            "discovery_candidate": false,
+            "p_species": 1.0,
+            "argmax_receptor": "FepA",
+            "argmax_score": 1.0,
+            "rank_score": 1.0,
+            "in_heldout_test": false,
+            "member_id": "PD8-EC1.12",
+            "receptor_support": [
+              "FepA"
+            ],
+            "support_size": 1
+          },
+          {
+            "accession": "NC_101837",
+            "phage_name": "Escherichia phage nom",
+            "annotated_host": "Escherichia coli",
+            "discovery_candidate": false,
+            "p_species": 1.0,
+            "argmax_receptor": "TolC",
+            "argmax_score": 1.0,
+            "rank_score": 1.0,
+            "in_heldout_test": false,
+            "member_id": "PD8-EC1.13",
+            "receptor_support": [
+              "TolC"
+            ],
+            "support_size": 1
+          },
+          {
+            "accession": "OR896823",
+            "phage_name": "Escherichia phage NorthRox",
+            "annotated_host": "Escherichia coli",
+            "discovery_candidate": false,
+            "p_species": 1.0,
+            "argmax_receptor": "TolC",
+            "argmax_score": 1.0,
+            "rank_score": 1.0,
+            "in_heldout_test": false,
+            "member_id": "PD8-EC1.14",
+            "receptor_support": [
+              "TolC"
+            ],
+            "support_size": 1
+          },
+          {
+            "accession": "PZ278545",
+            "phage_name": "Klebsiella phage EDIRA092",
+            "annotated_host": "Klebsiella pneumoniae",
+            "discovery_candidate": true,
+            "p_species": 0.9968,
+            "argmax_receptor": "TolC",
+            "argmax_score": 1.0,
+            "rank_score": 0.9968,
+            "in_heldout_test": true,
+            "member_id": "PD8-EC1.15",
+            "receptor_support": [
+              "TolC"
+            ],
+            "support_size": 1
+          },
+          {
+            "accession": "NC_100129",
+            "phage_name": "Escherichia phage Jahat_MG145",
+            "annotated_host": "Escherichia coli",
+            "discovery_candidate": false,
+            "p_species": 1.0,
+            "argmax_receptor": "YaeT_BamA",
+            "argmax_score": 1.0,
+            "rank_score": 1.0,
+            "in_heldout_test": false,
+            "member_id": "PD8-EC1.16",
+            "receptor_support": [
+              "YaeT_BamA"
+            ],
+            "support_size": 1
+          },
+          {
+            "accession": "NC_101840",
+            "phage_name": "Escherichia phage orkinos",
+            "annotated_host": "Escherichia coli",
+            "discovery_candidate": false,
+            "p_species": 1.0,
+            "argmax_receptor": "YaeT_BamA",
+            "argmax_score": 1.0,
+            "rank_score": 1.0,
+            "in_heldout_test": false,
+            "member_id": "PD8-EC1.17",
+            "receptor_support": [
+              "YaeT_BamA"
+            ],
+            "support_size": 1
+          },
+          {
+            "accession": "PZ103647",
+            "phage_name": "Klebsiella phage THQ_03",
+            "annotated_host": "Klebsiella pneumoniae",
+            "discovery_candidate": true,
+            "p_species": 0.9489,
+            "argmax_receptor": "YaeT_BamA",
+            "argmax_score": 1.0,
+            "rank_score": 0.9489,
+            "in_heldout_test": false,
+            "member_id": "PD8-EC1.18",
+            "receptor_support": [
+              "YaeT_BamA"
+            ],
+            "support_size": 1
+          }
+        ],
+        "escape_union": [
+          "FhuA",
+          "Tsx",
+          "BtuB",
+          "FepA",
+          "TolC",
+          "YaeT_BamA"
+        ],
+        "escape_union_size": 6,
+        "escape_probability": {
+          "mu=1e-07": {
+            "q_single_lineage": 6.399963499189535e-35,
+            "p_escape_population": 0.0,
+            "union_bound": 6.399963499189535e-27
+          },
+          "mu=1e-06": {
+            "q_single_lineage": 6.3996352118694e-29,
+            "p_escape_population": 0.0,
+            "union_bound": 6.3996352118694e-21
+          },
+          "mu=1e-05": {
+            "q_single_lineage": 6.396353084883822e-23,
+            "p_escape_population": 0.0,
+            "union_bound": 6.3963530848838214e-15
+          }
+        },
+        "escape_model": {
+          "generations": 20,
+          "population": 100000000.0,
+          "assumption": "independent per-receptor LOF, no fitness cost"
+        },
+        "expected_true_escape_depth": {
+          "eps=0.05": 5.99925,
+          "eps=0.1": 5.994,
+          "eps=0.2": 5.952
+        },
+        "single_class_escape": {
+          "mu=1e-07": {
+            "q_single_lineage": 1.999998098911604e-06,
+            "p_escape_population": 1.0,
+            "union_bound": 1.0
+          },
+          "mu=1e-06": {
+            "q_single_lineage": 1.9999810001669616e-05,
+            "p_escape_population": 1.0,
+            "union_bound": 1.0
+          },
+          "mu=1e-05": {
+            "q_single_lineage": 0.00019998100113904904,
+            "p_escape_population": 1.0,
+            "union_bound": 1.0
+          }
+        },
+        "falsification_matrix": [
+          {
+            "member_id": "PD8-EC1.1",
+            "WT": 1,
+            "delta_FhuA": 0,
+            "delta_Tsx": 1,
+            "delta_BtuB": 1,
+            "delta_FepA": 1,
+            "delta_TolC": 1,
+            "delta_YaeT_BamA": 1
+          },
+          {
+            "member_id": "PD8-EC1.2",
+            "WT": 1,
+            "delta_FhuA": 0,
+            "delta_Tsx": 1,
+            "delta_BtuB": 1,
+            "delta_FepA": 1,
+            "delta_TolC": 1,
+            "delta_YaeT_BamA": 1
+          },
+          {
+            "member_id": "PD8-EC1.3",
+            "WT": 1,
+            "delta_FhuA": 0,
+            "delta_Tsx": 1,
+            "delta_BtuB": 1,
+            "delta_FepA": 1,
+            "delta_TolC": 1,
+            "delta_YaeT_BamA": 1
+          },
+          {
+            "member_id": "PD8-EC1.4",
+            "WT": 1,
+            "delta_FhuA": 1,
+            "delta_Tsx": 0,
+            "delta_BtuB": 1,
+            "delta_FepA": 1,
+            "delta_TolC": 1,
+            "delta_YaeT_BamA": 1
+          },
+          {
+            "member_id": "PD8-EC1.5",
+            "WT": 1,
+            "delta_FhuA": 1,
+            "delta_Tsx": 0,
+            "delta_BtuB": 1,
+            "delta_FepA": 1,
+            "delta_TolC": 1,
+            "delta_YaeT_BamA": 1
+          },
+          {
+            "member_id": "PD8-EC1.6",
+            "WT": 1,
+            "delta_FhuA": 1,
+            "delta_Tsx": 0,
+            "delta_BtuB": 1,
+            "delta_FepA": 1,
+            "delta_TolC": 1,
+            "delta_YaeT_BamA": 1
+          },
+          {
+            "member_id": "PD8-EC1.7",
+            "WT": 1,
+            "delta_FhuA": 1,
+            "delta_Tsx": 1,
+            "delta_BtuB": 0,
+            "delta_FepA": 1,
+            "delta_TolC": 1,
+            "delta_YaeT_BamA": 1
+          },
+          {
+            "member_id": "PD8-EC1.8",
+            "WT": 1,
+            "delta_FhuA": 1,
+            "delta_Tsx": 1,
+            "delta_BtuB": 0,
+            "delta_FepA": 1,
+            "delta_TolC": 1,
+            "delta_YaeT_BamA": 1
+          },
+          {
+            "member_id": "PD8-EC1.9",
+            "WT": 1,
+            "delta_FhuA": 1,
+            "delta_Tsx": 1,
+            "delta_BtuB": 0,
+            "delta_FepA": 1,
+            "delta_TolC": 1,
+            "delta_YaeT_BamA": 1
+          },
+          {
+            "member_id": "PD8-EC1.10",
+            "WT": 1,
+            "delta_FhuA": 1,
+            "delta_Tsx": 1,
+            "delta_BtuB": 1,
+            "delta_FepA": 0,
+            "delta_TolC": 1,
+            "delta_YaeT_BamA": 1
+          },
+          {
+            "member_id": "PD8-EC1.11",
+            "WT": 1,
+            "delta_FhuA": 1,
+            "delta_Tsx": 1,
+            "delta_BtuB": 1,
+            "delta_FepA": 0,
+            "delta_TolC": 1,
+            "delta_YaeT_BamA": 1
+          },
+          {
+            "member_id": "PD8-EC1.12",
+            "WT": 1,
+            "delta_FhuA": 1,
+            "delta_Tsx": 1,
+            "delta_BtuB": 1,
+            "delta_FepA": 0,
+            "delta_TolC": 1,
+            "delta_YaeT_BamA": 1
+          },
+          {
+            "member_id": "PD8-EC1.13",
+            "WT": 1,
+            "delta_FhuA": 1,
+            "delta_Tsx": 1,
+            "delta_BtuB": 1,
+            "delta_FepA": 1,
+            "delta_TolC": 0,
+            "delta_YaeT_BamA": 1
+          },
+          {
+            "member_id": "PD8-EC1.14",
+            "WT": 1,
+            "delta_FhuA": 1,
+            "delta_Tsx": 1,
+            "delta_BtuB": 1,
+            "delta_FepA": 1,
+            "delta_TolC": 0,
+            "delta_YaeT_BamA": 1
+          },
+          {
+            "member_id": "PD8-EC1.15",
+            "WT": 1,
+            "delta_FhuA": 1,
+            "delta_Tsx": 1,
+            "delta_BtuB": 1,
+            "delta_FepA": 1,
+            "delta_TolC": 0,
+            "delta_YaeT_BamA": 1
+          },
+          {
+            "member_id": "PD8-EC1.16",
+            "WT": 1,
+            "delta_FhuA": 1,
+            "delta_Tsx": 1,
+            "delta_BtuB": 1,
+            "delta_FepA": 1,
+            "delta_TolC": 1,
+            "delta_YaeT_BamA": 0
+          },
+          {
+            "member_id": "PD8-EC1.17",
+            "WT": 1,
+            "delta_FhuA": 1,
+            "delta_Tsx": 1,
+            "delta_BtuB": 1,
+            "delta_FepA": 1,
+            "delta_TolC": 1,
+            "delta_YaeT_BamA": 0
+          },
+          {
+            "member_id": "PD8-EC1.18",
+            "WT": 1,
+            "delta_FhuA": 1,
+            "delta_Tsx": 1,
+            "delta_BtuB": 1,
+            "delta_FepA": 1,
+            "delta_TolC": 1,
+            "delta_YaeT_BamA": 0
+          }
+        ],
+        "weakest_member_predictions": [
+          {
+            "member_id": "PD8-EC1.1",
+            "phage_name": "Escherichia phage EcoStrike",
+            "prediction": "host knockout of FhuA alone escapes this member"
+          },
+          {
+            "member_id": "PD8-EC1.2",
+            "phage_name": "Escherichia phage RudolfGeigy",
+            "prediction": "host knockout of FhuA alone escapes this member"
+          },
+          {
+            "member_id": "PD8-EC1.3",
+            "phage_name": "Escherichia phage MaxBurger",
+            "prediction": "host knockout of FhuA alone escapes this member"
+          },
+          {
+            "member_id": "PD8-EC1.4",
+            "phage_name": "Escherichia phage OLB156",
+            "prediction": "host knockout of Tsx alone escapes this member"
+          },
+          {
+            "member_id": "PD8-EC1.5",
+            "phage_name": "Escherichia phage phiM",
+            "prediction": "host knockout of Tsx alone escapes this member"
+          },
+          {
+            "member_id": "PD8-EC1.6",
+            "phage_name": "Escherichia phage KCP_045",
+            "prediction": "host knockout of Tsx alone escapes this member"
+          },
+          {
+            "member_id": "PD8-EC1.7",
+            "phage_name": "Escherichia phage Doce",
+            "prediction": "host knockout of BtuB alone escapes this member"
+          },
+          {
+            "member_id": "PD8-EC1.8",
+            "phage_name": "Escherichia phage Mpec4",
+            "prediction": "host knockout of BtuB alone escapes this member"
+          },
+          {
+            "member_id": "PD8-EC1.9",
+            "phage_name": "Klebsiella phage C2",
+            "prediction": "host knockout of BtuB alone escapes this member"
+          },
+          {
+            "member_id": "PD8-EC1.10",
+            "phage_name": "Escherichia phage ityhuna",
+            "prediction": "host knockout of FepA alone escapes this member"
+          },
+          {
+            "member_id": "PD8-EC1.11",
+            "phage_name": "Escherichia phage vB_Eco_EFF11A",
+            "prediction": "host knockout of FepA alone escapes this member"
+          },
+          {
+            "member_id": "PD8-EC1.12",
+            "phage_name": "Escherichia phage SF-E5",
+            "prediction": "host knockout of FepA alone escapes this member"
+          },
+          {
+            "member_id": "PD8-EC1.13",
+            "phage_name": "Escherichia phage nom",
+            "prediction": "host knockout of TolC alone escapes this member"
+          },
+          {
+            "member_id": "PD8-EC1.14",
+            "phage_name": "Escherichia phage NorthRox",
+            "prediction": "host knockout of TolC alone escapes this member"
+          },
+          {
+            "member_id": "PD8-EC1.15",
+            "phage_name": "Klebsiella phage EDIRA092",
+            "prediction": "host knockout of TolC alone escapes this member"
+          },
+          {
+            "member_id": "PD8-EC1.16",
+            "phage_name": "Escherichia phage Jahat_MG145",
+            "prediction": "host knockout of YaeT_BamA alone escapes this member"
+          },
+          {
+            "member_id": "PD8-EC1.17",
+            "phage_name": "Escherichia phage orkinos",
+            "prediction": "host knockout of YaeT_BamA alone escapes this member"
+          },
+          {
+            "member_id": "PD8-EC1.18",
+            "phage_name": "Klebsiella phage THQ_03",
+            "prediction": "host knockout of YaeT_BamA alone escapes this member"
+          }
+        ]
+      },
+      "leg_b_threshold_sensitivity": {
+        "theta=0.5": {
+          "n_members": 3,
+          "feasible_k_cover": true,
+          "support_sizes": [
+            10,
+            10,
+            10
+          ],
+          "depth": {
+            "LamB": 3,
+            "FhuA": 3,
+            "OmpC": 3,
+            "OmpA": 3,
+            "OmpF": 3,
+            "Tsx": 3,
+            "BtuB": 3,
+            "FepA": 3,
+            "TolC": 3,
+            "YaeT_BamA": 3
+          },
+          "escape_union_size": 10,
+          "member_accessions": [
+            "PX405662",
+            "PX907401",
+            "PZ871095"
+          ]
+        },
+        "theta=0.7": {
+          "n_members": 4,
+          "feasible_k_cover": true,
+          "support_sizes": [
+            9,
+            9,
+            9,
+            9
+          ],
+          "depth": {
+            "LamB": 3,
+            "FhuA": 4,
+            "OmpC": 3,
+            "OmpA": 3,
+            "OmpF": 4,
+            "Tsx": 3,
+            "BtuB": 4,
+            "FepA": 4,
+            "TolC": 4,
+            "YaeT_BamA": 4
+          },
+          "escape_union_size": 10,
+          "member_accessions": [
+            "OR896823",
+            "PX907401",
+            "PZ386947",
+            "PZ445436"
+          ]
+        },
+        "theta=0.9": {
+          "n_members": 5,
+          "feasible_k_cover": false,
+          "support_sizes": [
+            9,
+            9,
+            7,
+            7,
+            6
+          ],
+          "depth": {
+            "LamB": 3,
+            "FhuA": 3,
+            "OmpC": 2,
+            "OmpA": 3,
+            "OmpF": 4,
+            "Tsx": 5,
+            "BtuB": 4,
+            "FepA": 4,
+            "TolC": 5,
+            "YaeT_BamA": 5
+          },
+          "escape_union_size": 10,
+          "member_accessions": [
+            "PX759568",
+            "PZ476263",
+            "PZ683264",
+            "PZ379181",
+            "PX985797"
+          ]
+        }
+      }
+    },
+    "klebsiella": {
+      "cocktail_id": "PD8-KP1",
+      "strain_panel": "Klebsiella pneumoniae KPN2146 (WT) and single-knockout panel",
+      "leg_a_argmax_design": {
+        "pool_size": 358,
+        "k_redundancy": 3,
+        "validated_receptors": [
+          "ompK36",
+          "ompK35",
+          "lamB",
+          "OmpA"
+        ],
+        "excluded_receptors_low_auc": [],
+        "infeasible_receptors": [],
+        "targeted_receptors": [
+          "ompK36",
+          "ompK35",
+          "lamB",
+          "OmpA"
+        ],
+        "depth": {
+          "ompK36": 3,
+          "ompK35": 3,
+          "lamB": 3,
+          "OmpA": 3
+        },
+        "members": [
+          {
+            "accession": "PX529439",
+            "phage_name": "Klebsiella phage vB_KpnP_KS2",
+            "annotated_host": "Klebsiella pneumoniae",
+            "discovery_candidate": false,
+            "p_species": 1.0,
+            "argmax_receptor": "ompK36",
+            "argmax_score": 1.0,
+            "rank_score": 1.0,
+            "in_heldout_test": false,
+            "member_id": "PD8-KP1.1",
+            "receptor_support": [
+              "ompK36"
+            ],
+            "support_size": 1
+          },
+          {
+            "accession": "PX630711",
+            "phage_name": "Klebsiella phage Artin",
+            "annotated_host": "Klebsiella pneumoniae",
+            "discovery_candidate": false,
+            "p_species": 1.0,
+            "argmax_receptor": "ompK36",
+            "argmax_score": 1.0,
+            "rank_score": 1.0,
+            "in_heldout_test": false,
+            "member_id": "PD8-KP1.2",
+            "receptor_support": [
+              "ompK36"
+            ],
+            "support_size": 1
+          },
+          {
+            "accession": "PZ797503",
+            "phage_name": "Escherichia phage vB_EscC_ArakU1",
+            "annotated_host": "Escherichia coli",
+            "discovery_candidate": true,
+            "p_species": 0.9994,
+            "argmax_receptor": "ompK36",
+            "argmax_score": 1.0,
+            "rank_score": 0.9994,
+            "in_heldout_test": true,
+            "member_id": "PD8-KP1.3",
+            "receptor_support": [
+              "ompK36"
+            ],
+            "support_size": 1
+          },
+          {
+            "accession": "NC_104633",
+            "phage_name": "Klebsiella phage vB_KpnS-VAC10",
+            "annotated_host": "Klebsiella pneumoniae",
+            "discovery_candidate": false,
+            "p_species": 1.0,
+            "argmax_receptor": "ompK35",
+            "argmax_score": 1.0,
+            "rank_score": 1.0,
+            "in_heldout_test": false,
+            "member_id": "PD8-KP1.4",
+            "receptor_support": [
+              "ompK35"
+            ],
+            "support_size": 1
+          },
+          {
+            "accession": "OR090976",
+            "phage_name": "Klebsiella phage Shaphc-173",
+            "annotated_host": "Klebsiella pneumoniae",
+            "discovery_candidate": false,
+            "p_species": 1.0,
+            "argmax_receptor": "ompK35",
+            "argmax_score": 1.0,
+            "rank_score": 1.0,
+            "in_heldout_test": false,
+            "member_id": "PD8-KP1.5",
+            "receptor_support": [
+              "ompK35"
+            ],
+            "support_size": 1
+          },
+          {
+            "accession": "PZ917099",
+            "phage_name": "Escherichia phage Apar18",
+            "annotated_host": "Escherichia coli",
+            "discovery_candidate": true,
+            "p_species": 0.9849,
+            "argmax_receptor": "ompK35",
+            "argmax_score": 1.0,
+            "rank_score": 0.9849,
+            "in_heldout_test": true,
+            "member_id": "PD8-KP1.6",
+            "receptor_support": [
+              "ompK35"
+            ],
+            "support_size": 1
+          },
+          {
+            "accession": "NC_103859",
+            "phage_name": "Klebsiella phage ABTNL-2",
+            "annotated_host": "Klebsiella pneumoniae",
+            "discovery_candidate": false,
+            "p_species": 1.0,
+            "argmax_receptor": "lamB",
+            "argmax_score": 1.0,
+            "rank_score": 1.0,
+            "in_heldout_test": true,
+            "member_id": "PD8-KP1.7",
+            "receptor_support": [
+              "lamB"
+            ],
+            "support_size": 1
+          },
+          {
+            "accession": "NC_104630",
+            "phage_name": "Klebsiella phage vB_KpnS-VAC6",
+            "annotated_host": "Klebsiella pneumoniae",
+            "discovery_candidate": false,
+            "p_species": 1.0,
+            "argmax_receptor": "lamB",
+            "argmax_score": 1.0,
+            "rank_score": 1.0,
+            "in_heldout_test": false,
+            "member_id": "PD8-KP1.8",
+            "receptor_support": [
+              "lamB"
+            ],
+            "support_size": 1
+          },
+          {
+            "accession": "PZ324409",
+            "phage_name": "Escherichia phage ECO26-131-S11",
+            "annotated_host": "Escherichia coli",
+            "discovery_candidate": true,
+            "p_species": 1.0,
+            "argmax_receptor": "lamB",
+            "argmax_score": 1.0,
+            "rank_score": 1.0,
+            "in_heldout_test": false,
+            "member_id": "PD8-KP1.9",
+            "receptor_support": [
+              "lamB"
+            ],
+            "support_size": 1
+          },
+          {
+            "accession": "NC_105155",
+            "phage_name": "Klebsiella phage vB_Kp_IME328",
+            "annotated_host": "Klebsiella pneumoniae",
+            "discovery_candidate": false,
+            "p_species": 1.0,
+            "argmax_receptor": "OmpA",
+            "argmax_score": 1.0,
+            "rank_score": 1.0,
+            "in_heldout_test": false,
+            "member_id": "PD8-KP1.10",
+            "receptor_support": [
+              "OmpA"
+            ],
+            "support_size": 1
+          },
+          {
+            "accession": "PX131000",
+            "phage_name": "Klebsiella phage Tissira",
+            "annotated_host": "Klebsiella pneumoniae",
+            "discovery_candidate": false,
+            "p_species": 1.0,
+            "argmax_receptor": "OmpA",
+            "argmax_score": 1.0,
+            "rank_score": 1.0,
+            "in_heldout_test": false,
+            "member_id": "PD8-KP1.11",
+            "receptor_support": [
+              "OmpA"
+            ],
+            "support_size": 1
+          },
+          {
+            "accession": "PZ465523",
+            "phage_name": "Escherichia phage Eve",
+            "annotated_host": "Escherichia coli",
+            "discovery_candidate": true,
+            "p_species": 0.9298,
+            "argmax_receptor": "OmpA",
+            "argmax_score": 0.998,
+            "rank_score": 0.9279404,
+            "in_heldout_test": true,
+            "member_id": "PD8-KP1.12",
+            "receptor_support": [
+              "OmpA"
+            ],
+            "support_size": 1
+          }
+        ],
+        "escape_union": [
+          "ompK36",
+          "ompK35",
+          "lamB",
+          "OmpA"
+        ],
+        "escape_union_size": 4,
+        "escape_probability": {
+          "mu=1e-07": {
+            "q_single_lineage": 1.5999939165258066e-23,
+            "p_escape_population": 0.0,
+            "union_bound": 1.5999939165258066e-15
+          },
+          "mu=1e-06": {
+            "q_single_lineage": 1.5999392014006563e-19,
+            "p_escape_population": 0.0,
+            "union_bound": 1.5999392014006563e-11
+          },
+          "mu=1e-05": {
+            "q_single_lineage": 1.5993921230736955e-15,
+            "p_escape_population": 1.5543121134609095e-07,
+            "union_bound": 1.5993921230736956e-07
+          }
+        },
+        "escape_model": {
+          "generations": 20,
+          "population": 100000000.0,
+          "assumption": "independent per-receptor LOF, no fitness cost"
+        },
+        "expected_true_escape_depth": {
+          "eps=0.05": 3.9995,
+          "eps=0.1": 3.996,
+          "eps=0.2": 3.968
+        },
+        "single_class_escape": {
+          "mu=1e-07": {
+            "q_single_lineage": 1.999998098911604e-06,
+            "p_escape_population": 1.0,
+            "union_bound": 1.0
+          },
+          "mu=1e-06": {
+            "q_single_lineage": 1.9999810001669616e-05,
+            "p_escape_population": 1.0,
+            "union_bound": 1.0
+          },
+          "mu=1e-05": {
+            "q_single_lineage": 0.00019998100113904904,
+            "p_escape_population": 1.0,
+            "union_bound": 1.0
+          }
+        },
+        "falsification_matrix": [
+          {
+            "member_id": "PD8-KP1.1",
+            "WT": 1,
+            "delta_ompK36": 0,
+            "delta_ompK35": 1,
+            "delta_lamB": 1,
+            "delta_OmpA": 1
+          },
+          {
+            "member_id": "PD8-KP1.2",
+            "WT": 1,
+            "delta_ompK36": 0,
+            "delta_ompK35": 1,
+            "delta_lamB": 1,
+            "delta_OmpA": 1
+          },
+          {
+            "member_id": "PD8-KP1.3",
+            "WT": 1,
+            "delta_ompK36": 0,
+            "delta_ompK35": 1,
+            "delta_lamB": 1,
+            "delta_OmpA": 1
+          },
+          {
+            "member_id": "PD8-KP1.4",
+            "WT": 1,
+            "delta_ompK36": 1,
+            "delta_ompK35": 0,
+            "delta_lamB": 1,
+            "delta_OmpA": 1
+          },
+          {
+            "member_id": "PD8-KP1.5",
+            "WT": 1,
+            "delta_ompK36": 1,
+            "delta_ompK35": 0,
+            "delta_lamB": 1,
+            "delta_OmpA": 1
+          },
+          {
+            "member_id": "PD8-KP1.6",
+            "WT": 1,
+            "delta_ompK36": 1,
+            "delta_ompK35": 0,
+            "delta_lamB": 1,
+            "delta_OmpA": 1
+          },
+          {
+            "member_id": "PD8-KP1.7",
+            "WT": 1,
+            "delta_ompK36": 1,
+            "delta_ompK35": 1,
+            "delta_lamB": 0,
+            "delta_OmpA": 1
+          },
+          {
+            "member_id": "PD8-KP1.8",
+            "WT": 1,
+            "delta_ompK36": 1,
+            "delta_ompK35": 1,
+            "delta_lamB": 0,
+            "delta_OmpA": 1
+          },
+          {
+            "member_id": "PD8-KP1.9",
+            "WT": 1,
+            "delta_ompK36": 1,
+            "delta_ompK35": 1,
+            "delta_lamB": 0,
+            "delta_OmpA": 1
+          },
+          {
+            "member_id": "PD8-KP1.10",
+            "WT": 1,
+            "delta_ompK36": 1,
+            "delta_ompK35": 1,
+            "delta_lamB": 1,
+            "delta_OmpA": 0
+          },
+          {
+            "member_id": "PD8-KP1.11",
+            "WT": 1,
+            "delta_ompK36": 1,
+            "delta_ompK35": 1,
+            "delta_lamB": 1,
+            "delta_OmpA": 0
+          },
+          {
+            "member_id": "PD8-KP1.12",
+            "WT": 1,
+            "delta_ompK36": 1,
+            "delta_ompK35": 1,
+            "delta_lamB": 1,
+            "delta_OmpA": 0
+          }
+        ],
+        "weakest_member_predictions": [
+          {
+            "member_id": "PD8-KP1.1",
+            "phage_name": "Klebsiella phage vB_KpnP_KS2",
+            "prediction": "host knockout of ompK36 alone escapes this member"
+          },
+          {
+            "member_id": "PD8-KP1.2",
+            "phage_name": "Klebsiella phage Artin",
+            "prediction": "host knockout of ompK36 alone escapes this member"
+          },
+          {
+            "member_id": "PD8-KP1.3",
+            "phage_name": "Escherichia phage vB_EscC_ArakU1",
+            "prediction": "host knockout of ompK36 alone escapes this member"
+          },
+          {
+            "member_id": "PD8-KP1.4",
+            "phage_name": "Klebsiella phage vB_KpnS-VAC10",
+            "prediction": "host knockout of ompK35 alone escapes this member"
+          },
+          {
+            "member_id": "PD8-KP1.5",
+            "phage_name": "Klebsiella phage Shaphc-173",
+            "prediction": "host knockout of ompK35 alone escapes this member"
+          },
+          {
+            "member_id": "PD8-KP1.6",
+            "phage_name": "Escherichia phage Apar18",
+            "prediction": "host knockout of ompK35 alone escapes this member"
+          },
+          {
+            "member_id": "PD8-KP1.7",
+            "phage_name": "Klebsiella phage ABTNL-2",
+            "prediction": "host knockout of lamB alone escapes this member"
+          },
+          {
+            "member_id": "PD8-KP1.8",
+            "phage_name": "Klebsiella phage vB_KpnS-VAC6",
+            "prediction": "host knockout of lamB alone escapes this member"
+          },
+          {
+            "member_id": "PD8-KP1.9",
+            "phage_name": "Escherichia phage ECO26-131-S11",
+            "prediction": "host knockout of lamB alone escapes this member"
+          },
+          {
+            "member_id": "PD8-KP1.10",
+            "phage_name": "Klebsiella phage vB_Kp_IME328",
+            "prediction": "host knockout of OmpA alone escapes this member"
+          },
+          {
+            "member_id": "PD8-KP1.11",
+            "phage_name": "Klebsiella phage Tissira",
+            "prediction": "host knockout of OmpA alone escapes this member"
+          },
+          {
+            "member_id": "PD8-KP1.12",
+            "phage_name": "Escherichia phage Eve",
+            "prediction": "host knockout of OmpA alone escapes this member"
+          }
+        ]
+      },
+      "leg_b_threshold_sensitivity": {
+        "theta=0.5": {
+          "n_members": 3,
+          "feasible_k_cover": true,
+          "support_sizes": [
+            4,
+            4,
+            4
+          ],
+          "depth": {
+            "ompK36": 3,
+            "ompK35": 3,
+            "lamB": 3,
+            "OmpA": 3
+          },
+          "escape_union_size": 4,
+          "member_accessions": [
+            "NC_103859",
+            "NC_104395",
+            "NC_104627"
+          ]
+        },
+        "theta=0.7": {
+          "n_members": 3,
+          "feasible_k_cover": true,
+          "support_sizes": [
+            4,
+            4,
+            4
+          ],
+          "depth": {
+            "ompK36": 3,
+            "ompK35": 3,
+            "lamB": 3,
+            "OmpA": 3
+          },
+          "escape_union_size": 4,
+          "member_accessions": [
+            "NC_103859",
+            "NC_104395",
+            "NC_104627"
+          ]
+        },
+        "theta=0.9": {
+          "n_members": 3,
+          "feasible_k_cover": true,
+          "support_sizes": [
+            4,
+            4,
+            4
+          ],
+          "depth": {
+            "ompK36": 3,
+            "ompK35": 3,
+            "lamB": 3,
+            "OmpA": 3
+          },
+          "escape_union_size": 4,
+          "member_accessions": [
+            "NC_103859",
+            "NC_104395",
+            "NC_104627"
+          ]
+        }
+      }
+    }
+  }
+}
