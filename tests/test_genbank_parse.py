@@ -18,3 +18,10 @@ def test_parse_host_and_rbp():
 def test_hypothetical_protein_excluded():
     rec = parse_genbank(FIX.read_text())
     assert all("hypothetical" not in p.lower() for p, _ in rec.rbp_products)
+
+
+def test_multi_record_parse():
+    text = FIX.read_text()
+    recs = list(__import__("phage_design.data.genbank_parse", fromlist=["parse_genbank_multi"]).parse_genbank_multi(text + "\n" + text))
+    assert len(recs) == 2
+    assert all(r.host == "Escherichia coli" for r in recs)

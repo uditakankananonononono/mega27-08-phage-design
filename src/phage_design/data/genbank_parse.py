@@ -32,6 +32,17 @@ class PhageRecord:
 
 def parse_genbank(text: str) -> PhageRecord:
     rec = SeqIO.read(io.StringIO(text), "genbank")
+    return _record_to_phage(rec)
+
+
+def parse_genbank_multi(text: str):
+    """Yield PhageRecord for each record in a concatenated multi-record fetch."""
+    import io as _io
+    for rec in SeqIO.parse(_io.StringIO(text), "genbank"):
+        yield _record_to_phage(rec)
+
+
+def _record_to_phage(rec) -> PhageRecord:
     host = None
     for feat in rec.features:
         if feat.type == "source":
