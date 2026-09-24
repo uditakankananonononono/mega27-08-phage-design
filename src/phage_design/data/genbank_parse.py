@@ -15,8 +15,14 @@ from dataclasses import dataclass, field
 from Bio import SeqIO
 
 RBP_KEYWORDS = re.compile(
-    r"(tail[ -]?fib[er]{2}|tail[ -]?spike|receptor[ -]?binding|tail[ -]?adhesin|"
-    r"long tail fiber|short tail fiber|tail fiber assembly)",
+    r"(tail[ -]?fib[er]{2}|tail[ -]?spike|receptor[ -]?binding|tail[ -]?adhesin)",
+    re.IGNORECASE,
+)
+# These products match the keywords above but are NOT receptor-binding:
+# assembly chaperones (gp57A/gp38 class), proximal connectors, attachment
+# catalysts. They never contact the host receptor, so they are excluded.
+RBP_EXCLUDE = re.compile(
+    r"(assembly|chaperone|connector|catalyst|adaptor|baseplate|proximal|hinge)",
     re.IGNORECASE,
 )
 
@@ -53,7 +59,7 @@ def _record_to_phage(rec) -> PhageRecord:
         if feat.type != "CDS":
             continue
         product = feat.qualifiers.get("product", [""])[0]
-        if RBP_KEYWORDS.search(product):
+        if RBP_KEYWORDS.search(product) and not RBP_EXCLUDE.search(product):
             aa = feat.qualifiers.get("translation", [""])[0]
             if aa:
                 rbps.append((product, aa))
