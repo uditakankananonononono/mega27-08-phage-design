@@ -1,0 +1,27 @@
+phages=790 samples=1580 unique proteins=1432
+split sizes train=1106 val=158 test=316
+epoch  1 loss=0.6125 val AUROC=0.938 AUPRC=0.919 acc=0.892
+epoch  2 loss=0.3057 val AUROC=0.945 AUPRC=0.947 acc=0.905
+epoch  3 loss=0.1572 val AUROC=0.954 AUPRC=0.952 acc=0.911
+epoch  4 loss=0.0978 val AUROC=0.956 AUPRC=0.938 acc=0.911
+epoch  5 loss=0.0584 val AUROC=0.960 AUPRC=0.936 acc=0.930
+epoch  6 loss=0.0425 val AUROC=0.958 AUPRC=0.933 acc=0.918
+epoch  7 loss=0.0464 val AUROC=0.957 AUPRC=0.923 acc=0.930
+epoch  8 loss=0.0338 val AUROC=0.962 AUPRC=0.935 acc=0.930
+epoch  9 loss=0.0213 val AUROC=0.961 AUPRC=0.935 acc=0.930
+epoch 10 loss=0.0266 val AUROC=0.959 AUPRC=0.926 acc=0.924
+epoch 11 loss=0.0167 val AUROC=0.963 AUPRC=0.937 acc=0.930
+epoch 12 loss=0.0274 val AUROC=0.960 AUPRC=0.926 acc=0.930
+epoch 13 loss=0.0186 val AUROC=0.961 AUPRC=0.932 acc=0.937
+epoch 14 loss=0.0103 val AUROC=0.961 AUPRC=0.932 acc=0.930
+epoch 15 loss=0.0080 val AUROC=0.962 AUPRC=0.932 acc=0.930
+epoch 16 loss=0.0073 val AUROC=0.960 AUPRC=0.929 acc=0.930
+epoch 17 loss=0.0053 val AUROC=0.960 AUPRC=0.930 acc=0.930
+epoch 18 loss=0.0049 val AUROC=0.960 AUPRC=0.930 acc=0.930
+epoch 19 loss=0.0042 val AUROC=0.960 AUPRC=0.930 acc=0.930
+epoch 20 loss=0.0044 val AUROC=0.961 AUPRC=0.930 acc=0.930
+CHOICE ACCURACY (test phages): 0.962 (152/158)
+BASELINE KMER-LR  test AUROC=0.933 AUPRC=0.946 acc=0.886
+
+TEST  AUROC=0.978 AUPRC=0.981 acc=0.953
+runtime 95.1s
