@@ -1237,3 +1237,63 @@ Second, the receptor mediation call is the resistance-management layer. Phage th
 Third, the pipeline degrades honestly. Where the docking engine cannot support a structural claim, the paper says the control failed (Section 6.4) and the model ships without a docking-dependent claim. Where single-receptor scores are out-of-distribution, the probe says so and shows the anti-markers (Section 13.3). Where the test set might inflate accuracy, Section 16 ranks that as the top threat and proposes the decontamination experiment. A screening tool that will be trusted with clinical-adjacent decisions has to publish its own failure map, and we have tried to make the failure map more useful than the headline.
 
 The discovery claim, stated at the strength the evidence supports: this work names 17 specific, falsifiable host-switch candidates with accession-level identities, probabilities, and receptor hypotheses, of which 11 are out-of-sample predictions by a model that beats the published generalist tool on the same held-out genomes by 23.4 accuracy points. Whether any candidate is a real host-range extension is now a wet-lab question, and it is a cheap one: each row is one phage, one strain panel, one plaque assay.
+
+## 18. Extended mathematical appendix
+
+The main text keeps derivations short. This appendix carries the full versions, plus four additional results referenced elsewhere. Equation numbers continue from Section 5 (equations 15-22).
+
+### 18.1 Variance of the AUROC estimator and a significance bound for the seed gap
+
+Section 5.6 identified AUROC with the Mann-Whitney U statistic. Under the null hypothesis that positive and negative scores share a distribution, and with n1 positives and n0 negatives, the U statistic has mean n1 n0 / 2 and, accounting for ties, variance
+
+  Var(U) = n1 n0 (n1 + n0 + 1) / 12.            (15)
+
+Dividing through by (n1 n0)^2 gives Var(AUROC) = (n1 + n0 + 1) / (12 n1 n0). For our paired design the effective comparison for choice-style metrics uses n1 = n0 = 158, giving Var(AUROC) ~ 317 / (12 * 158^2) = 1.06e-3 under the null, sd ~ 0.033. The observed seed-7 AUROC of 0.973 sits (0.973 - 0.5) / 0.033 ~ 14.5 null standard deviations from chance; the null is not the interesting hypothesis, but the same calculation bounds the noise floor of the estimate itself. A Hanley-McNeil estimate of the AUROC variance under the alternative, using the exponential approximation with observed A = 0.973,
+
+  Var(A) ~ [A(1-A) + (n1-1)(Q1-A^2) + (n0-1)(Q2-A^2)] / (n1 n0),   (16)
+
+with Q1 = A/(2-A), Q2 = 2A^2/(1+A), evaluates to approximately 8.7e-5, sd ~ 0.009. The 95% interval is then roughly [0.955, 0.991], which excludes the baseline's 0.910 point estimate. This is an approximate interval, not a paired test; the paired statement we stand behind is the per-seed sign consistency reported in Section 13.1 (hybrid exceeds baseline at all three seeds, a one-sided sign-test p = 2^-3 = 0.125, weak by itself, but the paired margins are large, 4.5-6.3 points, and a bootstrap over test phages would tighten it; we report the conservative interval above rather than an aggressive bootstrap).
+
+### 18.2 The cross-entropy gradient and why the degenerate direction is unlearnable
+
+Section 5.2 proved the additive degeneracy algebraically. Here we show the optimization view, which is the practically useful version: the degenerate direction is not merely unhelpful, it is invisible to the gradient. Write the additive score for pair (p, h) as s(p, h) = a(p) + b(h), and the logistic loss over a dataset D as
+
+  L(a, b) = sum_{(p,h,y) in D} softplus(-z s(p,h)),   z = 2y - 1.   (17)
+
+Consider the one-parameter family of reparametrizations a -> a + t, b -> b - t, which leaves every score invariant: s_t(p, h) = a(p) + t + b(h) - t = s(p, h). The directional derivative of L along this family is
+
+  dL/dt = sum_D sigma(-z s(p,h)) * (-z) * (d s_t / dt) = 0,          (18)
+
+because d s_t/dt = 0 identically. In words: along the degenerate direction the loss surface is exactly flat, so gradient descent neither learns nor unlearns it; the component of the parameters along that direction is set entirely by initialization and weight decay, and it cancels in every score. The imbalance corollary of Theorem 1 is the finite-sample shadow of the same fact: with 431 positives and 359 negatives, the flat direction is still flat, but the *reported* accuracy of a thresholded additive model can drift with the offset the optimizer happened to leave in a(p), which is why we report choice accuracy as the primary metric.
+
+### 18.3 Convolution as matched filtering, and the receptor-motif interpretation
+
+The first CNN layer computes, for kernel k of width w at position i,
+
+  (x * k)_i = sum_{j=0}^{w-1} <x_{i+j}, k_j>,                        (19)
+
+an inner product between the 23-channel residue feature vectors of a length-w window and the kernel. Inner products are unnormalized cosine similarities up to scale, so each first-layer kernel is literally a matched filter for a length-w feature motif, and the max-pool that follows asks "did this motif occur anywhere in the protein". This is the standard interpretation, but it earns its place here because phage RBP biology is motif-shaped: receptor specificity in well-studied fibers is carried by short variable loops (the T4 gp37 tip, the gp38 adhesin domain), so a matched-filter bank over residue features is the right inductive bias, and it explains why the pure CNN without the k-mer head still reaches 0.609 AUROC (Section 6.1): a minority of fibers carry an almost unambiguous motif signature, and the rest need the compositional context the hybrid adds.
+
+### 18.4 Message passing as kernel smoothing on the residue graph
+
+One MPNN layer updates node i by
+
+  h_i' = phi( h_i, sum_{j in N(i)} psi(h_i, h_j, e_ij) ),            (20)
+
+with e_ij the edge features (contact geometry from the structure). If psi is linear in h_j and N(i) is fixed, this is a kernel-weighted local average followed by a pointwise nonlinearity, i.e., one step of anisotropic smoothing on the residue graph where the structure decides which residues are neighbors. Two consequences are worth stating precisely. First, the readout sum_i h_i^(T) is permutation invariant (Theorem 2) because both the neighborhood sum and the final sum are, and the proof in Section 5.3 goes through unchanged for any psi that does not reference node indices. Second, depth T bounds the receptive field: information at node i after T layers comes only from its T-hop neighborhood, so the GNN can represent patch-level features (a binding face) but not whole-protein context; whole-protein context is supplied by the CNN branch and the k-mer head, which is the architectural reason the two heads are complementary rather than redundant.
+
+### 18.5 Choice accuracy as a U-statistic and its variance
+
+The choice metric scores each test phage twice, once with each species panel, and counts a win when the true-species score is higher. The estimator is
+
+  C = (1/n) sum_i 1[ s_i(true) > s_i(other) ],                       (21)
+
+a mean of Bernoulli variables that are independent across phages under the group split (phages, not pairs, are the sampling units). Hence
+
+  Var(C) = C(1 - C) / n,                                             (22)
+
+which at C = 0.924 and n = 158 gives sd = 0.021, 95% interval approximately [0.883, 0.965]. The interval excludes 0.5 by construction and overlaps the AUROC interval, consistent with the two metrics tracking the same underlying ranking quality. Note the subtlety Theorem 1 makes exact: C is invariant to any additive per-phage score component, so unlike accuracy it cannot be inflated by an offset the optimizer leaves behind; it prices only the discriminative part of the model.
+
+### 18.6 A note on what we did not formalize
+
+Two quantities in the pipeline resist clean formalization and we flag them rather than pretend otherwise. The docking score (Section 5.5) mixes shape complementarity with proxy energy terms whose relative weights are heuristic; there is no principled derivation of those weights from first principles at our level of coarse-graining, which is one more reason the docking negative in Section 6.4 is reported as an engineering result rather than a physical one. And the per-receptor probe of Section 13.3 produces Mann-Whitney AUCs whose null variance follows equation 15, but the scores being compared are out-of-distribution model outputs, so the AUCs quantify separation of the probe, not of biology; the paper reads them as diagnostics, and the distinction is load-bearing.
