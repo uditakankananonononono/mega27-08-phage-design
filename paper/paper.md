@@ -94,6 +94,8 @@ repository.
 - Appendix C: Dataset statistics and lineage
 - Appendix D: Notation and glossary
 - Appendix E: Feature and channel specification
+- Appendix F: External tools registry (42 tools)
+- Appendix G: Dataset manifest (63,682 accession-level datasets)
 - References
 
 ---
