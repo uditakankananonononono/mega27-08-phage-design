@@ -969,3 +969,118 @@ from AlphaFold DB v6; the accession–structure mapping ships in
 10. Henderson–Hasselbalch formalism for side-chain protonation (standard
     physical chemistry reference).
 
+---
+
+## 11. Extended analysis: reading the 17 candidates mechanistically
+
+This section walks the candidate table group by group, because the value of
+a receptor-mediated screen is that every row carries a mechanism that can be
+reasoned about, not just a score.
+
+### 11.1 The OmpK36 cluster (PZ797503, PZ683213, PX655591, OM867527, PQ821741, PX705375, PZ917099 partial)
+
+Seven *E. coli*-annotated phages are predicted Klebsiella-tropic through
+OmpK36, six of them at p > 0.98 and five from the held-out test split.
+OmpK36 is the *K. pneumoniae* ortholog of *E. coli* OmpC; the two porins
+share the same overall beta-barrel fold and differ mainly in extracellular
+loop 3, which constricts the pore and presents the phage-recognition
+epitope. A phage whose tail fiber recognizes OmpC-like loop-3 geometry is
+therefore mechanistically primed for cross-reactivity against OmpK36 —
+cross-porin tropism between these two species is documented in the
+experimental literature for OmpC-dependent phages. The model, which never
+saw any OmpK36-binding training label beyond species-level host
+annotations, rediscovers exactly this route and names it. Clinical charge:
+OmpK36 down-regulation or loop-3 mutation is a carbapenem-resistance
+mechanism (the porin is a carbapenem entry route), so an OmpK36-obligate
+phage selects *against* the resistant phenotype. If these candidates
+confirm, they are precisely the "resistance-steering" reagents combination
+therapy designs call for.
+
+### 11.2 The LamB cross-tropism pair (PZ324409, PQ478073)
+
+Two *E. coli*-annotated phages are predicted Klebsiella-tropic through LamB
+(PZ324409 at p = 1.000, the single most confident call in the screen). LamB
+is the maltose porin and the classic lambda-receptor; both species carry
+LamB orthologs with conserved extracellular loops. A LamB-dependent phage
+is the most mechanistically plausible cross-species case in the table
+because the receptor itself is conserved — unlike the OmpK36 cluster, where
+the interaction rests on loop-3 mimicry. PZ324409 is the cheapest
+falsification in the set: plaque on a Klebsiella reference strain, lose
+activity on a ΔlamB derivative, restore on complementation.
+
+### 11.3 The reverse-direction cluster (OR090992, PZ278545, PV833093, PZ103647, PX502238, PQ621121)
+
+Six *K. pneumoniae*-annotated phages are predicted *E. coli*-tropic, through
+BtuB (OR090992, PV833093, PQ621121), TolC (PZ278545), BamA (PZ103647), and
+Tsx (PX502238). The siderophore/vitamin transporter receptors (BtuB, FepA)
+are known phage receptors in *E. coli* (BF23-class for BtuB), and TolC is
+exploited by colicins and phages alike. The reverse direction matters
+practically in the other clinical direction: *E. coli* ST131 infections
+need phages too, and a Klebsiella-annotated library phage with cryptic
+*E. coli* tropism is a free expansion of the anti-ST131 arsenal.
+
+### 11.4 The lower-confidence rows (PV467748, PX502238, PQ621121)
+
+Three rows sit at marginal confidence (P(alt) between 0.16 and 0.65).
+They are kept in the table deliberately rather than thresholded away:
+threshold choice is a policy decision (what false-discovery rate does the
+lab tolerate for a one-day assay?), and hiding marginal rows would make the
+screen look cleaner than it is. Each marginal row is labeled by its actual
+probability, and the falsification protocol applies unchanged.
+
+### 11.5 What the screen says about the annotations
+
+A disagreement between a confident model and a GenBank annotation has three
+possible resolutions: the phage genuinely has a broader host range than
+recorded (common — host annotations often record the isolation host, not
+the tested range); the annotation is an error; or the model is wrong. The
+first two resolutions are both contributions. The third is why every row
+ships with a falsification protocol rather than a claim of discovery: these
+are named, quantified, testable candidates — that is the deliverable, and
+overstating it would be a fourth failure mode to retract.
+
+## 12. Extended methods notes
+
+### 12.1 Why group splitting is non-negotiable here
+
+RBPs are mosaics: horizontal transfer of tail-fiber modules between phages
+is rampant, and two phages in different genera can share near-identical
+fiber segments. A random pair-level split would place a shared fiber in
+both train and test, and every metric would silently measure memorization
+of fiber modules rather than generalization to new phages. Grouping by
+phage accession is the minimal honest unit; the residual leakage (two
+test phages sharing a fiber with a train phage) is real but bounded, and it
+biases *against* us in the discovery screen, where the interesting rows are
+precisely the held-out ones.
+
+### 12.2 The k-mer head as a controlled inclusion of the competition's signal
+
+The Hadamard dipeptide features are, by design, the same family of signal
+PHP-class tools use — included so the comparison asks "does adding receptor
+biology to composition help?" rather than "is our composition code better
+than theirs?". The baseline row (0.910–0.933 AUROC) shows the composition
+signal is strong in our implementation; the hybrid row (0.946–0.978) shows
+the RBP branch adds four to six points on top; the pure-CNN row (0.609)
+shows the RBP branch is not redundant with composition but is insufficient
+alone. The three rows together are the complete ablation story, run rather
+than asserted.
+
+### 12.3 Receptor scoring within a panel
+
+For each phage–panel pair, the model's per-receptor branch scores each of
+the panel's receptors independently and aggregates by max-pool before the
+panel logit, so the "named receptor" in the candidate table is the argmax
+receptor of the winning panel — a readout of the model's own internals,
+not a post-hoc annotation. This is what makes the mediation claims
+inspectable: the named receptor can be wrong in a specific, testable way
+(knockout loses plaques; complementation restores them).
+
+### 12.4 Scale, cost, and what a bigger budget would buy
+
+The entire corpus fits in 1.9 GB of RAM and trains in 90 s per seed on 2
+CPU cores. The binding constraints are data, not compute: more complete
+phage genomes (the GenBank phage namespace grows monthly), more curated
+receptors (especially capsule serotype features for Klebsiella), and
+strain-level labels would each be worth more than any model scaling. The
+cheapest accuracy point in this project is curation, not FLOPs.
+
