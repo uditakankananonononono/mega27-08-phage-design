@@ -30,7 +30,7 @@ KNOWN_SPECIES = [
 
 def normalize_host(raw: str | None) -> tuple[str | None, str | None]:
     """Return (species, strain); strain may be None, species None if unmapped."""
-    if not raw:
+    if raw is None or not isinstance(raw, str) or not raw.strip():
         return None, None
     text = " ".join(raw.strip().split())
     for sp in KNOWN_SPECIES:
