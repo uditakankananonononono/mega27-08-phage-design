@@ -14,25 +14,25 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 from phage_design.data.ncbi import efetch_genbank_multi, esearch
 from phage_design.data.genbank_parse import parse_genbank_multi
 
-
-def _single_record_text(text: str, accession: str) -> str:
-    # split concatenated GenBank text and keep the record for this accession
-    chunks = text.split("//\n")
-    for c in chunks:
-        if c.startswith("LOCUS") and accession in c.split("\n")[1][:200]:
-            return c + "//\n"
-    for c in chunks:
-        if accession in c[:400]:
-            return c + "//\n"
-    return chunks[0] + "//\n"
-
 RAW = Path("data/raw/genbank")
 RAW.mkdir(parents=True, exist_ok=True)
 
 QUERIES = {
-    "klebsiella": 'klebsiella phage[Title] AND complete genome[Title]',
+    "klebsiella": "klebsiella phage[Title] AND complete genome[Title]",
     "ecoli": '("Escherichia phage"[Title] OR coliphage[Title]) AND complete genome[Title]',
 }
+
+
+def _single_record_text(text: str, accession: str) -> str:
+    """Split concatenated GenBank flat text on record terminators and return
+    the record whose ACCESSION/VERSION block names this accession."""
+    chunks = [c.strip() for c in text.split("\n//") if c.strip()]
+    for c in chunks:
+        head = c[:600]
+        if accession in head and head.startswith("LOCUS"):
+            return c + "\n//\n"
+    return ""
+
 
 
 def main(retmax: int = 120) -> None:
@@ -49,8 +49,9 @@ def main(retmax: int = 120) -> None:
                 print(f"  ! efetch failed for batch {batch}: {e}")
                 continue
             for rec in parse_genbank_multi(text):
-                (RAW / f"{rec.accession}.gb").write_text(
-                    text[text.index("LOCUS"):] if False else _single_record_text(text, rec.accession))
+                single = _single_record_text(text, rec.accession)
+                if single:
+                    (RAW / f"{rec.accession}.gb").write_text(single)
                 for product, aa in rec.rbp_products:
                     rows.append({
                         "query": label, "accession": rec.accession,
