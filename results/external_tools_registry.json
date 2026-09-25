@@ -292,5 +292,96 @@
     "used_for": "PDF engine attempt (missing xcolor in sandbox; recorded, wkhtmltopdf used instead)",
     "status": "attempted, unavailable",
     "artifact": "/tmp/paper.pdf"
+  },
+  {
+    "tool": "pyrodigal",
+    "category": "science library",
+    "used_for": "gene-calling QC of GenBank CDS across 1200-genome corpus",
+    "status": "used",
+    "artifact": "results/pyrodigal_annotation_qc.csv"
+  },
+  {
+    "tool": "phanotate",
+    "category": "science tool",
+    "used_for": "independent gene-calling cross-check (4-genome sample)",
+    "status": "used",
+    "artifact": "results/phanotate_annotation_qc.csv"
+  },
+  {
+    "tool": "MMseqs2",
+    "category": "science tool",
+    "used_for": "clustering 823 RBPs into fiber families",
+    "status": "used",
+    "artifact": "results/mmseqs_rbp_clusters.tsv"
+  },
+  {
+    "tool": "MUSCLE 5",
+    "category": "science tool",
+    "used_for": "MSA of largest RBP cluster",
+    "status": "used",
+    "artifact": "results/muscle_largest_cluster_aln.faa"
+  },
+  {
+    "tool": "pyhmmer",
+    "category": "science library",
+    "used_for": "HMM built from MSA scanned over all 823 RBPs",
+    "status": "used",
+    "artifact": "results/pyhmmer_fiber_scan.csv"
+  },
+  {
+    "tool": "fastANI",
+    "category": "science tool",
+    "used_for": "ANI species-demarcation check vs ICTV host labels",
+    "status": "used",
+    "artifact": "results/fastani_species_check.json"
+  },
+  {
+    "tool": "DIAMOND",
+    "category": "science tool",
+    "used_for": "RBP->receptor blastp sensitivity control",
+    "status": "used",
+    "artifact": "results/diamond_rbp_receptor_hits.tsv"
+  },
+  {
+    "tool": "NetworkX",
+    "category": "science library",
+    "used_for": "RBP-host corpus graph connected components",
+    "status": "used",
+    "artifact": "results/networkx_corpus_graph.json"
+  },
+  {
+    "tool": "scikit-bio",
+    "category": "science library",
+    "used_for": "PERMANOVA of RBP composition by host genus",
+    "status": "used",
+    "artifact": "results/skbio_rbp_permanova.json"
+  },
+  {
+    "tool": "biotite",
+    "category": "science library",
+    "used_for": "secondary-structure annotation of receptor PDBs",
+    "status": "used",
+    "artifact": "results/structure_qc_biotite_freesasa.csv"
+  },
+  {
+    "tool": "freesasa",
+    "category": "science library",
+    "used_for": "solvent-accessible surface area of receptor PDBs",
+    "status": "used",
+    "artifact": "results/structure_qc_biotite_freesasa.csv"
+  },
+  {
+    "tool": "ViennaRNA",
+    "category": "science library",
+    "used_for": "UTR folding / RBS occlusion of RBP transcripts",
+    "status": "used",
+    "artifact": "results/viennarna_rbs.json"
+  },
+  {
+    "tool": "sourmash",
+    "category": "science tool",
+    "used_for": "k-mer containment between same/diff host-genus genomes",
+    "status": "used",
+    "artifact": "results/sourmash_genome_containment.json"
   }
 ]
