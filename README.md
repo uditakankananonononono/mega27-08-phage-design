@@ -26,11 +26,11 @@ python3 scripts/phagedesign.py cocktail [--design PD8-EC1]
 ## Reproduce
 
 ```bash
-PYTHONPATH=src python3 -m pytest tests/ -q   # 48 hermetic tests, no network
+PYTHONPATH=src python3 -m pytest tests/ -q   # 53 hermetic tests, no network
 ```
 
 All result numbers cited in paper/paper.md live in results/*.json and
-results/*.csv (see the artifact map, section 33 of the paper). The 55+ page
+results/*.csv (see the artifact map, section 33 of the paper). The paper (20 rendered pages in the committed PDF, not 55+)
 PDF is paper/paper.pdf; figures in paper/figures/.
 
 ## Data
