@@ -1,5 +1,10 @@
 # mega27-08-phage-design
 
+## Evidence scope note (2026-10-08)
+
+The newer capsule-specific retrospective audit is summarized in `docs/CAPSULE-LANE-AUDIT-2026-10-08.md`. It does **not** certify this legacy repository's design, efficacy, safety or baseline-superiority claims. The capsule lane remains training-side only, with 0/105 phages cleared and none nominated.
+
+
 Phage-host interaction prediction and falsifiable phage-cocktail design for
 antibiotic-resistant *E. coli* and *Klebsiella pneumoniae*, from real public
 data (790 phage genomes, NCBI/UniProt/AlphaFold/PDB). CNN+GNN interaction
